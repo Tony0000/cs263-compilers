@@ -107,6 +107,7 @@ class Lexer:
                 return Token(value, Tokens.INTEGER, start_col, self.row)
 
             if self.current_char.isalpha():
+                ''' reserved keywords recognition '''
                 start_col = self.col
                 id = self.word()
                 if id.upper() in RESERVED_KEYWORDS:
@@ -115,6 +116,7 @@ class Lexer:
                     return Token(id, Tokens.IDENTIFIER, start_col, self.row)
 
             if self.current_char in ('\"', "\'"):
+                ''' string recognition '''
                 start_col = self.col
                 constant_literal = self.build_string(self.current_char)
                 tk = Token(constant_literal, Tokens.STRING, self.col, self.row)
@@ -123,7 +125,7 @@ class Lexer:
 
             if self.current_char == '(':
                 if self.peek('*'):
-                    ''' comment handler '''
+                    ''' comment recognition '''
                     self.advance()
                     self.advance()
                     while(self.current_char is not None):

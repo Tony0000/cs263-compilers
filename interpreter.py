@@ -11,6 +11,7 @@ def main():
         lexer = Lexer()
         for line in f:
             lexer.feed(line)
+            print(line.strip())
             while lexer.is_readable():
                 token = lexer.get_next_token()
                 if token is not None:
