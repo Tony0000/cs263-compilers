@@ -19,7 +19,7 @@ SPECIAL_CHARACTERS = {
 
 class Lexer:
     def __init__(self):
-        self.row = -1
+        self.row = 0
 
     def feed(self, text):
         self.text = text.rstrip()
@@ -60,18 +60,12 @@ class Lexer:
         else:
             return False
 
-    def integer(self):
+    def build_number(self):
         number = ''
         while self.current_char is not None and self.current_char.isdigit():
             number += self.current_char
             self.advance()
-        if not self.current_char.isalpha():
-            return int(number)
-        else:
-            while self.current_char.isalnum():
-                number += self.current_char
-                self.advance()
-            self.error(token=number)
+        return number
 
     def word(self):
         word = ''
@@ -93,7 +87,7 @@ class Lexer:
 
     def get_next_token(self):
         while self.current_char is not None:
-            # print(self.current_char)
+
             if len(self.text) == 0:
                 continue
 
@@ -103,7 +97,13 @@ class Lexer:
 
             if self.current_char.isdigit():
                 start_col = self.col
-                value = self.integer()
+                value = self.build_number()
+                if self.current_char == '.':
+                    value +=  '.'
+                    self.advance()
+                    value += self.build_number()
+                    return Token(value, Tokens.REAL, start_col, self.row)
+
                 return Token(value, Tokens.INTEGER, start_col, self.row)
 
             if self.current_char.isalpha():

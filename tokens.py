@@ -6,7 +6,7 @@ class Token:
         self.col = col
 
     def __str__(self):
-        return "\t[{:04d}, {:04d}] ({:04d}, {:10s}) {{ {} }}".format(self.row, self.col, self.type.value, self.type.name, self.value)
+        return "\t[{:04d}, {:04d}] ({:04d}, {:10s}) {{{}}}".format(self.row, self.col+1, self.type.value, self.type.name, self.value)
 
 
 from enum import Enum
