@@ -18,17 +18,21 @@ SPECIAL_CHARACTERS = {
 }
 
 class Lexer:
-    def __init__(self):
-        self.row = 0
-
-    def feed(self, text):
-        self.text = text.rstrip()
+    def __init__(self, filename):
+        self.row = 1
         self.col = 0
-        self.row += 1
-        if len(self.text) > 0:
+        self.file = open(filename, 'r+')
+        self.text = self.file.readline()
+        self.current_char = self.text[self.col]
+
+    def has_next(self):
+        print(str(self.col) + " " +str(len(self.text)))
+        if self.col + 1 >= len(self.text):
+            self.text = self.file.readline()
+            self.col = 0
+            self.row += 1
             self.current_char = self.text[self.col]
 
-    def is_readable(self):
         return self.col < len(self.text)
 
     def error(self, token=None, msg=None):

@@ -7,15 +7,9 @@ def main():
     if len(sys.argv) == 2:
         filename = sys.argv[1]
 
-        f = open(filename, 'r+')
-        lexer = Lexer()
-        for line in f:
-            lexer.feed(line)
-            print(line.rstrip())
-            while lexer.is_readable():
-                token = lexer.get_next_token()
-                if token is not None:
-                    print(token)
+        lexer = Lexer(filename)
+        while(lexer.has_next() is not None):
+            print(lexer.get_next_token())
 
 if __name__ == '__main__':
     main()
