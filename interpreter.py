@@ -8,8 +8,15 @@ def main():
         filename = sys.argv[1]
 
         lexer = Lexer(filename)
-        while(lexer.has_next() is not None):
-            print(lexer.get_next_token())
+        # while(lexer.has_next() is not None):
+        token = lexer.get_next_token()
+        # print(token)
+
+        while(token.value is not 'EOF'):
+            print(token)
+            token = lexer.get_next_token()
+
+        print(token)
 
 if __name__ == '__main__':
     main()

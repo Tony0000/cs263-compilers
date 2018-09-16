@@ -72,3 +72,4 @@ class Tokens(Enum):
     THROUGH = 59
     TYPE = 60
     INVALID = 61
+    EOF = 62

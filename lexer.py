@@ -22,18 +22,9 @@ class Lexer:
         self.row = 1
         self.col = 0
         self.file = open(filename, 'r+')
-        self.text = self.file.readline()
+        self.text = self.file.readline().rstrip()
+        print(self.text)
         self.current_char = self.text[self.col]
-
-    def has_next(self):
-        print(str(self.col) + " " +str(len(self.text)))
-        if self.col + 1 >= len(self.text):
-            self.text = self.file.readline()
-            self.col = 0
-            self.row += 1
-            self.current_char = self.text[self.col]
-
-        return self.col < len(self.text)
 
     def error(self, token=None, msg=None):
         if msg:
@@ -45,8 +36,20 @@ class Lexer:
 
     def advance(self):
         self.col += 1
-        if self.col > len(self.text) - 1:
-            self.current_char = None
+        if self.col > len(self.text):
+            self.col = 0
+            self.row += 1
+            self.text = self.file.readline().rstrip()
+            if not self.text:
+                self.row += 1
+                self.text = self.file.readline().rstrip()
+
+            self.current_char = self.text[self.col] if len(self.text) > 0 else None
+            print(self.text.rstrip())
+
+        elif self.col == len(self.text):
+            self.current_char = " "
+            return
         else:
             self.current_char = self.text[self.col]
 
@@ -91,7 +94,6 @@ class Lexer:
 
     def get_next_token(self):
         while self.current_char is not None:
-
             if len(self.text) == 0:
                 continue
 
@@ -158,4 +160,4 @@ class Lexer:
                 self.advance()
                 return invalid_tk
 
-        return Token('EOF', None, self.col, self.row)
+        return Token('EOF', Tokens.EOF, self.col, self.row-1)
