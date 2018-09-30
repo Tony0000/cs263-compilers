@@ -1,3 +1,6 @@
+from enum import Enum
+
+
 class Token:
     def __init__(self, value, type, col, row):
         self.value = value
@@ -9,7 +12,6 @@ class Token:
         return "\t[{:04d}, {:04d}] ({:04d}, {:10s}) {{{}}}".format(self.row, self.col+1, self.type.value, self.type.name, self.value)
 
 
-from enum import Enum
 class Tokens(Enum):
     IDENTIFIER = 1
     CONST_INT = 2
