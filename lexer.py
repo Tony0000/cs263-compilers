@@ -4,18 +4,19 @@ RESERVED_KEYWORDS = [
     'BEGIN', 'END', 'IF', 'ELSE', 'INTEGER', 'REAL', 'CHAR','CONST',
      'STRING', 'WRITE','WRITELN', 'PROGRAM', 'VAR', 'THEN','BOOLEAN',
      'PROCEDURE', 'FUNCTION', 'EXIT', 'WHILE', 'DO', 'READ', 'READLN',
-     'ARRAY', 'OF', 'TYPE', 'STEP', 'CONST', 'AND', 'OR', 'DIV', 'STEP',
-     'NOT', 'USES', 'FOR', 'TO'
+     'ARRAY', 'OF', 'TYPE', 'STEP', 'CONST', 'AND', 'OR', 'INT_DIV',
+     'REAL_DIV', 'STEP','NOT', 'USES', 'FOR', 'TO'
  ]
 
 SPECIAL_CHARACTERS = {
     '[': Tokens.OPEN_BRA, ']': Tokens.CLOSE_BRA, '+': Tokens.PLUS, '-': Tokens.MINUS,
-    '*': Tokens.MULT, '/': Tokens.DIV, ';': Tokens.SEMICOLON, ',': Tokens.COMMA,
+    '*': Tokens.MULT, '/': Tokens.INT_DIV, '//': Tokens.REAL_DIV, ';': Tokens.SEMICOLON, ',': Tokens.COMMA,
     '(': Tokens.OPEN_PAR, ')': Tokens.CLOSE_PAR, '.': Tokens.DOT, '<':Tokens.OP_RELAT,
     '>':Tokens.OP_RELAT, '<=': Tokens.OP_RELAT , '>=': Tokens.OP_RELAT,
     '=': Tokens.OP_RELAT, ':=': Tokens.ASSIGN, ':':Tokens.DECLR,
     '..': Tokens.THROUGH
 }
+
 
 class Lexer:
     def __init__(self, filename):
