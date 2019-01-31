@@ -117,9 +117,19 @@ void flsentr(){
 
 //sent = atr | cond | iter
 void fsent(){
-  fatr();
-  fcond();
-  fiter();
+  if(tk.categ() == ID){
+    tk.next();
+  }else if(tk.categ() == SE){
+    tk.next();
+  }else if(tk.categ() == PARA){
+    tk.next()
+  }else if(tk.categ() == ENQUANTO){
+    tk.next()
+  }else if(tk.categ() == REPITA){
+    tk.next()
+  }else{
+    erro(ID, " ou ", SE, " ou ", PARA, " ou ", ENQUANTO, " ou ", REPITA, " esperado", tk);
+  }
 }
 
 //atr = 'id' '=' Ea
