@@ -2,10 +2,10 @@ from tokens import Token, Tokens
 
 RESERVED_KEYWORDS = [
     'BEGIN', 'END', 'IF', 'ELSE', 'INTEGER', 'REAL', 'CHAR','CONST',
-     'STRING', 'WRITE','WRITELN', 'PROGRAM', 'VAR', 'THEN','BOOLEAN',
-     'PROCEDURE', 'FUNCTION', 'EXIT', 'WHILE', 'DO', 'READ', 'READLN',
-     'ARRAY', 'OF', 'TYPE', 'STEP', 'CONST', 'AND', 'OR', 'INT_DIV',
-     'REAL_DIV', 'STEP','NOT', 'USES', 'FOR', 'TO'
+     'STRING', 'WRITE', 'PROGRAM', 'VAR', 'THEN','BOOLEAN',
+     'PROCEDURE', 'FUNCTION', 'EXIT', 'WHILE', 'DO', 'READ',
+     'ARRAY', 'OF', 'TYPE', 'STEP', 'CONST', 'AND', 'OR', 'STEP',
+     'NOT', 'USES', 'FOR', 'TO'
  ]
 
 SPECIAL_CHARACTERS = {
@@ -46,7 +46,8 @@ class Lexer:
                 self.text = self.file.readline().rstrip()
 
             self.current_char = self.text[self.col] if len(self.text) > 0 else None
-            print(self.text.rstrip())
+            if(len(self.text) > 0):
+                print(self.text.rstrip())
 
         elif self.col == len(self.text):
             self.current_char = " "

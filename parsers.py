@@ -1,5 +1,6 @@
 from tokens import Tokens
 
+
 class AST(object):
     """Abstract syntax tree"""
     pass

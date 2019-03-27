@@ -9,7 +9,8 @@ class Token:
         self.col = col
 
     def __str__(self):
-        return "\t[{:04d}, {:04d}] ({:04d}, {:10s}) {{{}}}".format(self.row, self.col+1, self.type.value, self.type.name, self.value)
+        return "\t[{:04d}, {:04d}] ({:04d}, {:10s}) {{{}}}".format(self.row,
+                    self.col+1, self.type.value, self.type.name, self.value)
 
 
 class Tokens(Enum):
@@ -21,9 +22,9 @@ class Tokens(Enum):
     CONST_STR = 6
     INTEGER = 7
     REAL = 8
-    CHAR = 9
-    STRING = 10
-    BOOL = 11
+    BOOL = 9
+    CHAR = 10
+    STRING = 11
     USES = 12
     FUNCTION = 13
     PROCEDURE = 14
@@ -38,41 +39,35 @@ class Tokens(Enum):
     WHILE = 23
     DO = 24
     READ = 25
-    READLN = 26
-    WRITE = 27
-    WRITELN = 28
-    AND = 29
-    OR = 30
-    NOT = 31
-    OPEN_PAR = 32
-    CLOSE_PAR = 33
-    OPEN_BRA = 34
-    CLOSE_BRA = 35
-    SEMICOLON = 36
-    COLON = 37
-    QUOTE = 38
-    OPEN_COM = 39
-    CLOSE_COM = 40
-    MULT = 41
-    PLUS = 42
-    MINUS = 43
-    REAL_DIV = 44
-    INT_DIV = 45
-    OP_RELAT = 46
-    ASSIGN = 47
-    UNARY = 48
-    BIT_NOT = 49
-    BIT_AND = 50
-    BIT_NOR = 51
-    DOT = 52
-    PROGRAM = 53
-    DECLR = 54
-    VAR = 55
-    COMMA = 56
-    EXIT = 57
-    ARRAY = 58
-    OF = 59
-    THROUGH = 60
-    TYPE = 61
-    INVALID = 62
-    EOF = 63
+    WRITE = 26
+    TYPE = 27
+    OF = 28
+    ARRAY = 29
+    EXIT = 30
+    PROGRAM = 31
+    VAR = 32
+    OPEN_PAR = 33
+    CLOSE_PAR = 34
+    OPEN_BRA = 35
+    CLOSE_BRA = 36
+    SEMICOLON = 37
+    DECLR = 38
+    QUOTE = 39
+    OPEN_COM = 40
+    CLOSE_COM = 41
+    COMMA = 42
+    THROUGH = 43
+    DOT = 45
+    NOT = 46
+    MULT = 47
+    DIV_INT = 48
+    DIV_REAL = 49
+    PLUS = 50
+    MINUS = 51
+    OP_RELAT = 52
+    ASSIGN = 53
+    BIT_NOT = 54
+    BIT_AND = 55
+    BIT_OR = 56
+    INVALID = 57
+    EOF = 58
