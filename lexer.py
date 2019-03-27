@@ -9,12 +9,13 @@ RESERVED_KEYWORDS = [
  ]
 
 SPECIAL_CHARACTERS = {
-    '[': Tokens.OPEN_BRA, ']': Tokens.CLOSE_BRA, '+': Tokens.PLUS, '-': Tokens.MINUS,
-    '*': Tokens.MULT, '/': Tokens.INT_DIV, '//': Tokens.REAL_DIV, ';': Tokens.SEMICOLON, ',': Tokens.COMMA,
-    '(': Tokens.OPEN_PAR, ')': Tokens.CLOSE_PAR, '.': Tokens.DOT, '<':Tokens.OP_RELAT,
-    '>':Tokens.OP_RELAT, '<=': Tokens.OP_RELAT , '>=': Tokens.OP_RELAT,
-    '=': Tokens.OP_RELAT, ':=': Tokens.ASSIGN, ':':Tokens.DECLR,
-    '..': Tokens.THROUGH
+    '[': Tokens.OPEN_BRA, ']': Tokens.CLOSE_BRA, '+': Tokens.PLUS,
+    '-': Tokens.MINUS, '*': Tokens.MULT, '/': Tokens.DIV_INT,
+    '//': Tokens.DIV_REAL, ';': Tokens.SEMICOLON, ',': Tokens.COMMA,
+    '(': Tokens.OPEN_PAR, ')': Tokens.CLOSE_PAR, '.': Tokens.DOT,
+    '<': Tokens.OP_RELAT, '>': Tokens.OP_RELAT, '<=': Tokens.OP_RELAT,
+    '>=': Tokens.OP_RELAT, '=': Tokens.OP_RELAT, ':=': Tokens.ASSIGN,
+    ':': Tokens.DECLR, '..': Tokens.THROUGH
 }
 
 
@@ -24,7 +25,7 @@ class Lexer:
         self.col = 0
         self.file = open(filename, 'r+')
         self.text = self.file.readline().rstrip()
-        print(self.text)
+        print("%4d  %s" % (self.row, self.text.rstrip()) )
         self.current_char = self.text[self.col]
 
     def error(self, token=None, msg=None):
@@ -47,7 +48,7 @@ class Lexer:
 
             self.current_char = self.text[self.col] if len(self.text) > 0 else None
             if(len(self.text) > 0):
-                print(self.text.rstrip())
+                print("%4d  %s" % (self.row, self.text.rstrip()) )
 
         elif self.col == len(self.text):
             self.current_char = " "
