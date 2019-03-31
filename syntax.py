@@ -1,4 +1,4 @@
-from tokens import Tokens
+from tokens import Category
 
 
 class AST(object):
@@ -96,14 +96,14 @@ class Parser(object):
 
     def program(self):
         """ PROGRAM variable SEMICOLON block DOT """
-        self.consume(Tokens.PROGRAM)
+        self.consume(Category.PROGRAM)
         name = self.variable()
-        self.consume(Tokens.SEMICOLON)
+        self.consume(Category.SEMICOLON)
         print('PROGRAM', name)
         node = self.block()
 
         node = Program(name, node)
-        self.consume(Tokens.DOT)
+        self.consume(Category.DOT)
         return node
 
     def block(self):
@@ -116,22 +116,22 @@ class Parser(object):
 
     def declarations(self):
         declrs = []
-        if(self.current_token.type == Tokens.VAR):
-            self.consume(Tokens.VAR)
-            while(self.current_token.type == Tokens.IDENTIFIER):
+        if(self.current_token.type == Category.VAR):
+            self.consume(Category.VAR)
+            while(self.current_token.type == Category.IDENTIFIER):
                 # concatenates two lists
                 declrs.extend(self.variable_declaration())
-                self.consume(Tokens.SEMICOLON)
+                self.consume(Category.SEMICOLON)
         return declrs
 
     def variable_declaration(self):
         node_list = []
         node_list.append(self.variable())
-        while(self.current_token.type == Tokens.COMMA):
-            self.consume(Tokens.COMMA)
+        while(self.current_token.type == Category.COMMA):
+            self.consume(Category.COMMA)
             node_list.append(self.variable())
 
-        self.consume(Tokens.DECLR)
+        self.consume(Category.DECLR)
         var_dclrs = []
         type = self.type_specification()
         for node in node_list:
@@ -140,7 +140,7 @@ class Parser(object):
 
     def type_specification(self):
         # Real, Integer and custom data types
-        if self.current_token.type in [Tokens.INTEGER, Tokens.REAL]:
+        if self.current_token.type in [Category.INTEGER, Category.REAL]:
             node = Type(token=self.current_token)
             self.consume(self.current_token.type)
         else:
@@ -151,9 +151,9 @@ class Parser(object):
 
     def compound_statement(self):
         """ BEGIN statement_list END """
-        self.consume(Tokens.BEGIN)
+        self.consume(Category.BEGIN)
         nodes_list = self.statement_list()
-        self.consume(Tokens.END)
+        self.consume(Category.END)
 
         root = CompoundOp()
         for node in nodes_list:
@@ -167,8 +167,8 @@ class Parser(object):
         """
         node = self.statement()
         nodes_list = [node]
-        while(self.current_token.type == Tokens.SEMICOLON):
-            self.consume(Tokens.SEMICOLON)
+        while(self.current_token.type == Category.SEMICOLON):
+            self.consume(Category.SEMICOLON)
             nodes_list.append(self.statement())
         return nodes_list
 
@@ -176,7 +176,7 @@ class Parser(object):
         """ variable ASSIGN expression """
         left = self.variable()
         token = self.current_token
-        self.consume(Tokens.ASSIGN)
+        self.consume(Category.ASSIGN)
         right = self.expression()
         node = AssignOp(left, token, right)
         return node
@@ -187,19 +187,19 @@ class Parser(object):
             |   assign_statement
             |   empty_statement
         """
-        if self.current_token.type == Tokens.BEGIN:
+        if self.current_token.type == Category.BEGIN:
             nodes_list = self.compound_statement()
-        elif self.current_token.type == Tokens.IDENTIFIER:
+        elif self.current_token.type == Category.IDENTIFIER:
             nodes_list = self.assign_statement()
         else:
             nodes_list = self.empty()
-        self.consume(Tokens.SEMICOLON)
+        self.consume(Category.SEMICOLON)
         return nodes_list
 
     def variable(self):
         """ identifier """
         node = Variable(self.current_token)
-        self.consume(Tokens.IDENTIFIER)
+        self.consume(Category.IDENTIFIER)
         return node
 
     def empty(self):
@@ -211,17 +211,17 @@ class Parser(object):
         self.current_token = self.lexer.get_next_token()
 
         node = self.term()
-        while self.current_token.type in (Tokens.PLUS, Tokens.MINUS):
+        while self.current_token.type in (Category.PLUS, Category.MINUS):
             token = self.current_token
-            self.consume(Tokens.PLUS)
+            self.consume(Category.PLUS)
             node = BinaryOp(left=node, op=token, right=self.term())
         return node
 
     def term(self):
-        """ factor ((MULT | INT_DIV | REAL_DIV) factor)* """
+        """ factor ((MULT | DIV) factor)* """
         node = self.factor()
 
-        while self.current_token.type in (Tokens.MULT, Tokens.INT_DIV, Tokens.REAL_DIV):
+        while self.current_token.type in (Category.MULT, Category.DIV):
             token = self.current_token
             self.consume(token.type)
             node = BinaryOp(left=node, op=token, right=self.factor())
@@ -237,22 +237,22 @@ class Parser(object):
             |   variable
         """
         token = self.current_token
-        if token.type in (Tokens.PLUS, Tokens.MINUS):
+        if token.type in (Category.PLUS, Category.MINUS):
             """ Unary operation """
             self.consume(token.type)
             node = UnaryOp(token, self.factor())
             return node
 
-        elif token.type in (Tokens.REAL, Tokens.INTEGER):
+        elif token.type in (Category.REAL, Category.INTEGER):
             """ value derivation """
             self.consume(token.type)
             return Numeric(token)
 
-        elif token.type == Tokens.OPEN_PAR:
+        elif token.type == Category.OPEN_PAR:
             """ expression derivation """
-            self.consume(Tokens.OPEN_PAR)
+            self.consume(Category.OPEN_PAR)
             node = self.expression()
-            self.consume(Tokens.CLOSE_PAR)
+            self.consume(Category.CLOSE_PAR)
             return node
 
         else:
@@ -264,6 +264,6 @@ class Parser(object):
         """ PROGRAM compound_statement DOT """
         print('hello world')
         node = self.program()
-        if self.current_token.type != Tokens.EOF:
+        if self.current_token.type != Category.EOF:
             self.error()
         return node

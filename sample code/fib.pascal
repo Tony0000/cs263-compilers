@@ -1,24 +1,23 @@
 program Fibonacci;
 procedure fib(n: Integer);
 var
-  u, v, w: Integer;
+  a, b, aux: Integer;
 
 begin
-  if n <= 1 then
-    write("0");
-    exit(0);
-  if n = 2 then
-    write('0, 1, 1');
-  u := 1;
-  v := 1;
-  write('0, 1, 1');
-  while w+u < n do
-  begin
-    w := u + w;
-    u := v;
-    v := w;
-    write(", ");
-  end;
+  a := 0;
+  b := 1;
+  if n = 0 then
+      writeln(a)
+  else
+      writeln(a);
+      writeln(b);
+      while a + b <= n do
+      begin
+        writeln(a + b);
+        aux := a;
+        a := b;
+        b := b + aux;
+      end;
 end;
 
 begin

@@ -1,52 +1,54 @@
-program shellsort
-function shellsort (vector: array of Integer, size: Integer) : Integer
-	begin
-	  var
-	  j, value : Integer;
-	  var gap := 1;
+program shellsort;
+const
+  MaxN = 100;
+type
+  TArray = array [0..MaxN] of Integer;
+var
+    k, n : Integer;
+    v, inv_v: TArray;
 
-  while gap < size do
-  begin
-      gap = 3 * gap + 1;
+procedure echoArray (var vector: TArray; var size: Integer);
+var i : Integer;
+begin
+  for i := 0 to size do
+   begin
+    write(vector[i]);
+    write(' ');
+   end;
+end;
+
+procedure ShellSort ( var A : TArray; N : Integer );
+var
+  i, j, step, tmp : Integer;
+begin
+  step:=N div 2;
+  while step>0 do
+	begin
+    for i:=step to N do
+		begin
+      tmp:=A[i];
+      j:=i;
+      while (j >= step) and (A[j-step] > tmp) do
+      begin
+        A[j]:=A[j-step];
+        j := j - step;
+      end;
+      A[j]:=tmp;
+    end;
+    step:=step div 2;
   end;
+  echoArray(A, n);
+end;
 
-  while gap > 1 do
-    	begin
-	    gap = gap / 3;
-	    for i := gap to size do
-        begin
-	      value = vector[i];
-	      j = i - gap;
-	      while j >= 0 and value < vector[j] do
-        	begin
-	        vector[j / gap] = vector[j];
-	        j = j - gap;
-	      end;
-	      vector[j - gap] = value;
-	    end;
-	  end;
-	  shellsort := vector;
-	end;
-
-	procedure echoArray (vector : array of Integer, size: Integer)
-	begin
-	  var i : Integer;
-	  for i := 0 to size do
-  begin
-	    write(vector[i])
-	  end;
-	end;
-
-	begin
-	var i, n : Integer;
+begin
   read(n);
-  type int_vector = array[0..n] of Integer;
-  var vector: int_vector;
-  for i := 0 to 10 do
+  for k := 0 to n do
   begin
-	    read(vector[i]);
-	end;
-	  echoArray(vector, n);
-	  array = shellsort(vector, n);
-	  echoArray(vector, n);
+	    read(v[k]);
+  end;
+  write('desordenados: ');
+  echoArray(v, n);
+  writeln('');
+  write('ordenados: ');
+  shellsort(v, n);
 end.

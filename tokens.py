@@ -13,7 +13,7 @@ class Token:
                     self.col+1, self.type.value, self.type.name, self.value)
 
 
-class Tokens(Enum):
+class Category(Enum):
     IDENTIFIER = 1
     CONST_INT = 2
     CONST_REAL = 3
@@ -60,8 +60,8 @@ class Tokens(Enum):
     DOT = 45
     NOT = 46
     MULT = 47
-    DIV_INT = 48
-    DIV_REAL = 49
+    DIV = 48
+    AND = 49
     PLUS = 50
     MINUS = 51
     OP_RELAT = 52
@@ -71,3 +71,5 @@ class Tokens(Enum):
     BIT_OR = 56
     INVALID = 57
     EOF = 58
+    WRITELN = 59
+    CONST = 60

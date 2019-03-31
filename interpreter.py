@@ -1,5 +1,5 @@
 from lexer import Lexer
-# from parsers import Parser
+from syntax import Parser
 import sys
 
 
