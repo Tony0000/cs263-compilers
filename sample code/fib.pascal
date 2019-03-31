@@ -9,19 +9,23 @@ begin
   if n = 0 then
       writeln(a)
   else
-      writeln(a);
-      writeln(b);
-      while a + b <= n do
       begin
-        writeln(a + b);
-        aux := a;
-        a := b;
-        b := b + aux;
+          write(a);
+          write(', ');
+          write(b);
+          while a + b <= n do
+          begin
+            write(', ');
+            write(a + b);
+            aux := a;
+            a := b;
+            b := b + aux;
+          end;
       end;
 end;
 
+var n: Integer;
 begin
-  var n: Integer;
   read(n);
   fib(n);
 end.

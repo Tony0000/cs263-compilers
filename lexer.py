@@ -36,7 +36,7 @@ class Lexer:
         else:
             print("Invalid character {} at [{},{}]".format(self.current_char, self.row, self.col))
 
-    def advance(self):
+    def advance(self, comment=None):
         self.col += 1
         if self.col > len(self.text):
             self.col = 0
@@ -47,7 +47,7 @@ class Lexer:
                 self.text = self.file.readline()
 
             self.current_char = self.text[self.col] if len(self.text) > 0 else None
-            if(len(self.text) > 0):
+            if(len(self.text) > 0 and self.current_char != '(' and not comment):
                 print("%4d  %s" % (self.row, self.text.rstrip()) )
 
         elif self.col == len(self.text):
@@ -63,7 +63,7 @@ class Lexer:
     def peek(self, next_char=None):
         next_col = self.col+1
         if next_col < len(self.text) and self.text[next_col] is not None:
-            if(next_char):
+            if next_char:
                 return next_char == self.text[next_col]
             else:
                 return self.text[next_col]
@@ -160,12 +160,12 @@ class Lexer:
 
             if self.current_char == '(' and self.peek('*'):
                 ''' multi line comment '''
-                self.advance()
-                self.advance()
-                while self.current_char != '*' and self.peek() != ')':
-                    self.advance()
-                self.advance()
-                self.advance()
+                self.advance(comment=True)
+                self.advance(comment=True)
+                while self.current_char != '*':
+                    self.advance(comment=True)
+                self.advance(comment=True)
+                self.advance(comment=True)
                 return self.get_next_token()
 
             if self.current_char in SPECIAL_CHARACTERS:
@@ -185,4 +185,4 @@ class Lexer:
                 self.advance()
                 return invalid_tk
 
-        return Token('EOF', Category.EOF, self.col, self.row-1)
+        return Token('EOF', Category.EOF, self.col, self.row)

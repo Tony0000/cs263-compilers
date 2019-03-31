@@ -42,6 +42,7 @@ end;
 
 begin
   read(n);
+  n := n-1;
   for k := 0 to n do
   begin
 	    read(v[k]);
