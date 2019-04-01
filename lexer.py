@@ -5,7 +5,7 @@ RESERVED_KEYWORDS = [
      'STRING', 'WRITE', 'PROGRAM', 'VAR', 'THEN','BOOLEAN',
      'PROCEDURE', 'FUNCTION', 'EXIT', 'WHILE', 'DO', 'READ',
      'ARRAY', 'OF', 'TYPE', 'STEP', 'CONST', 'AND', 'OR', 'STEP',
-     'NOT', 'USES', 'FOR', 'TO', 'WRITELN', 'CONST'
+     'NOT', 'USES', 'FOR', 'TO', 'WRITELN', 'CONST', 'BREAK', 'CONTINUE'
  ]
 
 SPECIAL_CHARACTERS = {
