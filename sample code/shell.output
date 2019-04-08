@@ -1,0 +1,313 @@
+1  program shellsort;
+     [0001, 0001] (0031, PROGRAM   ) {program}
+     [0001, 0009] (0001, IDENTIFIER) {shellsort}
+     [0001, 0018] (0037, SEMICOLON ) {;}
+2  const
+     [0002, 0001] (0056, CONST     ) {const}
+3    MaxN = 100;
+     [0003, 0003] (0001, IDENTIFIER) {MaxN}
+     [0003, 0008] (0051, OP_RELAT  ) {=}
+     [0003, 0010] (0002, CONST_INT ) {100}
+     [0003, 0013] (0037, SEMICOLON ) {;}
+4  type
+     [0004, 0001] (0027, TYPE      ) {type}
+5    TArray = array [0..MaxN] of Integer;
+     [0005, 0003] (0001, IDENTIFIER) {TArray}
+     [0005, 0010] (0051, OP_RELAT  ) {=}
+     [0005, 0012] (0029, ARRAY     ) {array}
+     [0005, 0018] (0035, OPEN_BRA  ) {[}
+     [0005, 0019] (0002, CONST_INT ) {0}
+     [0005, 0020] (0043, THROUGH   ) {..}
+     [0005, 0022] (0001, IDENTIFIER) {MaxN}
+     [0005, 0026] (0036, CLOSE_BRA ) {]}
+     [0005, 0028] (0028, OF        ) {of}
+     [0005, 0031] (0007, INTEGER   ) {Integer}
+     [0005, 0038] (0037, SEMICOLON ) {;}
+6  var
+     [0006, 0001] (0032, VAR       ) {var}
+7      k, n : Integer;
+     [0007, 0005] (0001, IDENTIFIER) {k}
+     [0007, 0006] (0042, COMMA     ) {,}
+     [0007, 0008] (0001, IDENTIFIER) {n}
+     [0007, 0010] (0038, DECLR     ) {:}
+     [0007, 0012] (0007, INTEGER   ) {Integer}
+     [0007, 0019] (0037, SEMICOLON ) {;}
+8      v, inv_v: TArray;
+     [0008, 0005] (0001, IDENTIFIER) {v}
+     [0008, 0006] (0042, COMMA     ) {,}
+     [0008, 0008] (0001, IDENTIFIER) {inv_v}
+     [0008, 0013] (0038, DECLR     ) {:}
+     [0008, 0015] (0001, IDENTIFIER) {TArray}
+     [0008, 0021] (0037, SEMICOLON ) {;}
+10  procedure echoArray (var vector: TArray; var size: Integer);
+     [0010, 0001] (0014, PROCEDURE ) {procedure}
+     [0010, 0011] (0001, IDENTIFIER) {echoArray}
+     [0010, 0021] (0033, OPEN_PAR  ) {(}
+     [0010, 0022] (0032, VAR       ) {var}
+     [0010, 0026] (0001, IDENTIFIER) {vector}
+     [0010, 0032] (0038, DECLR     ) {:}
+     [0010, 0034] (0001, IDENTIFIER) {TArray}
+     [0010, 0040] (0037, SEMICOLON ) {;}
+     [0010, 0042] (0032, VAR       ) {var}
+     [0010, 0046] (0001, IDENTIFIER) {size}
+     [0010, 0050] (0038, DECLR     ) {:}
+     [0010, 0052] (0007, INTEGER   ) {Integer}
+     [0010, 0059] (0034, CLOSE_PAR ) {)}
+     [0010, 0060] (0037, SEMICOLON ) {;}
+11  var i : Integer;
+     [0011, 0001] (0032, VAR       ) {var}
+     [0011, 0005] (0001, IDENTIFIER) {i}
+     [0011, 0007] (0038, DECLR     ) {:}
+     [0011, 0009] (0007, INTEGER   ) {Integer}
+     [0011, 0016] (0037, SEMICOLON ) {;}
+12  begin
+     [0012, 0001] (0015, BEGIN     ) {begin}
+13    for i := 0 to size do
+     [0013, 0003] (0020, FOR       ) {for}
+     [0013, 0007] (0001, IDENTIFIER) {i}
+     [0013, 0009] (0052, ASSIGN    ) {:=}
+     [0013, 0012] (0002, CONST_INT ) {0}
+     [0013, 0014] (0021, TO        ) {to}
+     [0013, 0017] (0001, IDENTIFIER) {size}
+     [0013, 0022] (0024, DO        ) {do}
+14     begin
+     [0014, 0004] (0015, BEGIN     ) {begin}
+15      write(vector[i]);
+     [0015, 0005] (0026, WRITE     ) {write}
+     [0015, 0010] (0033, OPEN_PAR  ) {(}
+     [0015, 0011] (0001, IDENTIFIER) {vector}
+     [0015, 0017] (0035, OPEN_BRA  ) {[}
+     [0015, 0018] (0001, IDENTIFIER) {i}
+     [0015, 0019] (0036, CLOSE_BRA ) {]}
+     [0015, 0020] (0034, CLOSE_PAR ) {)}
+     [0015, 0021] (0037, SEMICOLON ) {;}
+16      write(' ');
+     [0016, 0005] (0026, WRITE     ) {write}
+     [0016, 0010] (0033, OPEN_PAR  ) {(}
+     [0016, 0012] (0006, CONST_STR ) { }
+     [0016, 0014] (0034, CLOSE_PAR ) {)}
+     [0016, 0015] (0037, SEMICOLON ) {;}
+17     end;
+     [0017, 0004] (0016, END       ) {end}
+     [0017, 0007] (0037, SEMICOLON ) {;}
+18  end;
+     [0018, 0001] (0016, END       ) {end}
+     [0018, 0004] (0037, SEMICOLON ) {;}
+20  procedure ShellSort ( var A : TArray; N : Integer );
+     [0020, 0001] (0014, PROCEDURE ) {procedure}
+     [0020, 0011] (0001, IDENTIFIER) {ShellSort}
+     [0020, 0021] (0033, OPEN_PAR  ) {(}
+     [0020, 0023] (0032, VAR       ) {var}
+     [0020, 0027] (0001, IDENTIFIER) {A}
+     [0020, 0029] (0038, DECLR     ) {:}
+     [0020, 0031] (0001, IDENTIFIER) {TArray}
+     [0020, 0037] (0037, SEMICOLON ) {;}
+     [0020, 0039] (0001, IDENTIFIER) {N}
+     [0020, 0041] (0038, DECLR     ) {:}
+     [0020, 0043] (0007, INTEGER   ) {Integer}
+     [0020, 0051] (0034, CLOSE_PAR ) {)}
+     [0020, 0052] (0037, SEMICOLON ) {;}
+21  var
+     [0021, 0001] (0032, VAR       ) {var}
+22    i, j, step, tmp : Integer;
+     [0022, 0003] (0001, IDENTIFIER) {i}
+     [0022, 0004] (0042, COMMA     ) {,}
+     [0022, 0006] (0001, IDENTIFIER) {j}
+     [0022, 0007] (0042, COMMA     ) {,}
+     [0022, 0009] (0022, STEP      ) {step}
+     [0022, 0013] (0042, COMMA     ) {,}
+     [0022, 0015] (0001, IDENTIFIER) {tmp}
+     [0022, 0019] (0038, DECLR     ) {:}
+     [0022, 0021] (0007, INTEGER   ) {Integer}
+     [0022, 0028] (0037, SEMICOLON ) {;}
+23  begin
+     [0023, 0001] (0015, BEGIN     ) {begin}
+24    step:=N div 2;
+     [0024, 0003] (0022, STEP      ) {step}
+     [0024, 0007] (0052, ASSIGN    ) {:=}
+     [0024, 0009] (0001, IDENTIFIER) {N}
+     [0024, 0011] (0001, IDENTIFIER) {div}
+     [0024, 0015] (0002, CONST_INT ) {2}
+     [0024, 0016] (0037, SEMICOLON ) {;}
+25    while step>0 do
+     [0025, 0003] (0023, WHILE     ) {while}
+     [0025, 0009] (0022, STEP      ) {step}
+     [0025, 0013] (0051, OP_RELAT  ) {>}
+     [0025, 0014] (0002, CONST_INT ) {0}
+     [0025, 0016] (0024, DO        ) {do}
+26    begin
+     [0026, 0002] (0015, BEGIN     ) {begin}
+27      for i:=step to N do
+     [0027, 0005] (0020, FOR       ) {for}
+     [0027, 0009] (0001, IDENTIFIER) {i}
+     [0027, 0010] (0052, ASSIGN    ) {:=}
+     [0027, 0012] (0022, STEP      ) {step}
+     [0027, 0017] (0021, TO        ) {to}
+     [0027, 0020] (0001, IDENTIFIER) {N}
+     [0027, 0022] (0024, DO        ) {do}
+28            begin
+     [0028, 0003] (0015, BEGIN     ) {begin}
+29        tmp:=A[i];
+     [0029, 0007] (0001, IDENTIFIER) {tmp}
+     [0029, 0010] (0052, ASSIGN    ) {:=}
+     [0029, 0012] (0001, IDENTIFIER) {A}
+     [0029, 0013] (0035, OPEN_BRA  ) {[}
+     [0029, 0014] (0001, IDENTIFIER) {i}
+     [0029, 0015] (0036, CLOSE_BRA ) {]}
+     [0029, 0016] (0037, SEMICOLON ) {;}
+30        j:=i;
+     [0030, 0007] (0001, IDENTIFIER) {j}
+     [0030, 0008] (0052, ASSIGN    ) {:=}
+     [0030, 0010] (0001, IDENTIFIER) {i}
+     [0030, 0011] (0037, SEMICOLON ) {;}
+31        while (j >= step) and (A[j-step] > tmp) do
+     [0031, 0007] (0023, WHILE     ) {while}
+     [0031, 0013] (0033, OPEN_PAR  ) {(}
+     [0031, 0014] (0001, IDENTIFIER) {j}
+     [0031, 0016] (0051, OP_RELAT  ) {>=}
+     [0031, 0019] (0022, STEP      ) {step}
+     [0031, 0023] (0034, CLOSE_PAR ) {)}
+     [0031, 0025] (0057, AND       ) {and}
+     [0031, 0029] (0033, OPEN_PAR  ) {(}
+     [0031, 0030] (0001, IDENTIFIER) {A}
+     [0031, 0031] (0035, OPEN_BRA  ) {[}
+     [0031, 0032] (0001, IDENTIFIER) {j}
+     [0031, 0033] (0049, MINUS     ) {-}
+     [0031, 0034] (0022, STEP      ) {step}
+     [0031, 0038] (0036, CLOSE_BRA ) {]}
+     [0031, 0040] (0051, OP_RELAT  ) {>}
+     [0031, 0042] (0001, IDENTIFIER) {tmp}
+     [0031, 0045] (0034, CLOSE_PAR ) {)}
+     [0031, 0047] (0024, DO        ) {do}
+32        begin
+     [0032, 0007] (0015, BEGIN     ) {begin}
+33          A[j]:=A[j-step];
+     [0033, 0009] (0001, IDENTIFIER) {A}
+     [0033, 0010] (0035, OPEN_BRA  ) {[}
+     [0033, 0011] (0001, IDENTIFIER) {j}
+     [0033, 0012] (0036, CLOSE_BRA ) {]}
+     [0033, 0013] (0052, ASSIGN    ) {:=}
+     [0033, 0015] (0001, IDENTIFIER) {A}
+     [0033, 0016] (0035, OPEN_BRA  ) {[}
+     [0033, 0017] (0001, IDENTIFIER) {j}
+     [0033, 0018] (0049, MINUS     ) {-}
+     [0033, 0019] (0022, STEP      ) {step}
+     [0033, 0023] (0036, CLOSE_BRA ) {]}
+     [0033, 0024] (0037, SEMICOLON ) {;}
+34          j := j - step;
+     [0034, 0009] (0001, IDENTIFIER) {j}
+     [0034, 0011] (0052, ASSIGN    ) {:=}
+     [0034, 0014] (0001, IDENTIFIER) {j}
+     [0034, 0016] (0049, MINUS     ) {-}
+     [0034, 0018] (0022, STEP      ) {step}
+     [0034, 0022] (0037, SEMICOLON ) {;}
+35        end;
+     [0035, 0007] (0016, END       ) {end}
+     [0035, 0010] (0037, SEMICOLON ) {;}
+36        A[j]:=tmp;
+     [0036, 0007] (0001, IDENTIFIER) {A}
+     [0036, 0008] (0035, OPEN_BRA  ) {[}
+     [0036, 0009] (0001, IDENTIFIER) {j}
+     [0036, 0010] (0036, CLOSE_BRA ) {]}
+     [0036, 0011] (0052, ASSIGN    ) {:=}
+     [0036, 0013] (0001, IDENTIFIER) {tmp}
+     [0036, 0016] (0037, SEMICOLON ) {;}
+37      end;
+     [0037, 0005] (0016, END       ) {end}
+     [0037, 0008] (0037, SEMICOLON ) {;}
+38      step:=step div 2;
+     [0038, 0005] (0022, STEP      ) {step}
+     [0038, 0009] (0052, ASSIGN    ) {:=}
+     [0038, 0011] (0022, STEP      ) {step}
+     [0038, 0016] (0001, IDENTIFIER) {div}
+     [0038, 0020] (0002, CONST_INT ) {2}
+     [0038, 0021] (0037, SEMICOLON ) {;}
+39    end;
+     [0039, 0003] (0016, END       ) {end}
+     [0039, 0006] (0037, SEMICOLON ) {;}
+40    echoArray(A, n);
+     [0040, 0003] (0001, IDENTIFIER) {echoArray}
+     [0040, 0012] (0033, OPEN_PAR  ) {(}
+     [0040, 0013] (0001, IDENTIFIER) {A}
+     [0040, 0014] (0042, COMMA     ) {,}
+     [0040, 0016] (0001, IDENTIFIER) {n}
+     [0040, 0017] (0034, CLOSE_PAR ) {)}
+     [0040, 0018] (0037, SEMICOLON ) {;}
+41  end;
+     [0041, 0001] (0016, END       ) {end}
+     [0041, 0004] (0037, SEMICOLON ) {;}
+43  begin
+     [0043, 0001] (0015, BEGIN     ) {begin}
+44    read(n);
+     [0044, 0003] (0025, READ      ) {read}
+     [0044, 0007] (0033, OPEN_PAR  ) {(}
+     [0044, 0008] (0001, IDENTIFIER) {n}
+     [0044, 0009] (0034, CLOSE_PAR ) {)}
+     [0044, 0010] (0037, SEMICOLON ) {;}
+45    n := n-1;
+     [0045, 0003] (0001, IDENTIFIER) {n}
+     [0045, 0005] (0052, ASSIGN    ) {:=}
+     [0045, 0008] (0001, IDENTIFIER) {n}
+     [0045, 0009] (0049, MINUS     ) {-}
+     [0045, 0010] (0002, CONST_INT ) {1}
+     [0045, 0011] (0037, SEMICOLON ) {;}
+46    for k := 0 to n do
+     [0046, 0003] (0020, FOR       ) {for}
+     [0046, 0007] (0001, IDENTIFIER) {k}
+     [0046, 0009] (0052, ASSIGN    ) {:=}
+     [0046, 0012] (0002, CONST_INT ) {0}
+     [0046, 0014] (0021, TO        ) {to}
+     [0046, 0017] (0001, IDENTIFIER) {n}
+     [0046, 0019] (0024, DO        ) {do}
+47    begin
+     [0047, 0003] (0015, BEGIN     ) {begin}
+48        read(v[k]);
+     [0048, 0006] (0025, READ      ) {read}
+     [0048, 0010] (0033, OPEN_PAR  ) {(}
+     [0048, 0011] (0001, IDENTIFIER) {v}
+     [0048, 0012] (0035, OPEN_BRA  ) {[}
+     [0048, 0013] (0001, IDENTIFIER) {k}
+     [0048, 0014] (0036, CLOSE_BRA ) {]}
+     [0048, 0015] (0034, CLOSE_PAR ) {)}
+     [0048, 0016] (0037, SEMICOLON ) {;}
+49    end;
+     [0049, 0003] (0016, END       ) {end}
+     [0049, 0006] (0037, SEMICOLON ) {;}
+50    write('desordenados: ');
+     [0050, 0003] (0026, WRITE     ) {write}
+     [0050, 0008] (0033, OPEN_PAR  ) {(}
+     [0050, 0010] (0006, CONST_STR ) {desordenados: }
+     [0050, 0025] (0034, CLOSE_PAR ) {)}
+     [0050, 0026] (0037, SEMICOLON ) {;}
+51    echoArray(v, n);
+     [0051, 0003] (0001, IDENTIFIER) {echoArray}
+     [0051, 0012] (0033, OPEN_PAR  ) {(}
+     [0051, 0013] (0001, IDENTIFIER) {v}
+     [0051, 0014] (0042, COMMA     ) {,}
+     [0051, 0016] (0001, IDENTIFIER) {n}
+     [0051, 0017] (0034, CLOSE_PAR ) {)}
+     [0051, 0018] (0037, SEMICOLON ) {;}
+52    writeln('');
+     [0052, 0003] (0055, WRITELN   ) {writeln}
+     [0052, 0010] (0033, OPEN_PAR  ) {(}
+     [0052, 0012] (0006, CONST_STR ) {}
+     [0052, 0013] (0034, CLOSE_PAR ) {)}
+     [0052, 0014] (0037, SEMICOLON ) {;}
+53    write('ordenados: ');
+     [0053, 0003] (0026, WRITE     ) {write}
+     [0053, 0008] (0033, OPEN_PAR  ) {(}
+     [0053, 0010] (0006, CONST_STR ) {ordenados: }
+     [0053, 0022] (0034, CLOSE_PAR ) {)}
+     [0053, 0023] (0037, SEMICOLON ) {;}
+54    shellsort(v, n);
+     [0054, 0003] (0001, IDENTIFIER) {shellsort}
+     [0054, 0012] (0033, OPEN_PAR  ) {(}
+     [0054, 0013] (0001, IDENTIFIER) {v}
+     [0054, 0014] (0042, COMMA     ) {,}
+     [0054, 0016] (0001, IDENTIFIER) {n}
+     [0054, 0017] (0034, CLOSE_PAR ) {)}
+     [0054, 0018] (0037, SEMICOLON ) {;}
+55  end.
+     [0055, 0001] (0016, END       ) {end}
+     [0055, 0004] (0045, DOT       ) {.}
+     [0056, 0001] (0054, EOF       ) {EOF}

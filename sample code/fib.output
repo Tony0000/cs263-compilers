@@ -1,0 +1,143 @@
+1  program Fibonacci;
+     [0001, 0001] (0031, PROGRAM   ) {program}
+     [0001, 0009] (0001, IDENTIFIER) {Fibonacci}
+     [0001, 0018] (0037, SEMICOLON ) {;}
+2  procedure fib(n: Integer);
+     [0002, 0001] (0014, PROCEDURE ) {procedure}
+     [0002, 0011] (0001, IDENTIFIER) {fib}
+     [0002, 0014] (0033, OPEN_PAR  ) {(}
+     [0002, 0015] (0001, IDENTIFIER) {n}
+     [0002, 0016] (0038, DECLR     ) {:}
+     [0002, 0018] (0007, INTEGER   ) {Integer}
+     [0002, 0025] (0034, CLOSE_PAR ) {)}
+     [0002, 0026] (0037, SEMICOLON ) {;}
+3  var
+     [0003, 0001] (0032, VAR       ) {var}
+4    a, b, aux: Integer;
+     [0004, 0003] (0001, IDENTIFIER) {a}
+     [0004, 0004] (0042, COMMA     ) {,}
+     [0004, 0006] (0001, IDENTIFIER) {b}
+     [0004, 0007] (0042, COMMA     ) {,}
+     [0004, 0009] (0001, IDENTIFIER) {aux}
+     [0004, 0012] (0038, DECLR     ) {:}
+     [0004, 0014] (0007, INTEGER   ) {Integer}
+     [0004, 0021] (0037, SEMICOLON ) {;}
+6  begin
+     [0006, 0001] (0015, BEGIN     ) {begin}
+7    a := 0;
+     [0007, 0003] (0001, IDENTIFIER) {a}
+     [0007, 0005] (0052, ASSIGN    ) {:=}
+     [0007, 0008] (0002, CONST_INT ) {0}
+     [0007, 0009] (0037, SEMICOLON ) {;}
+8    b := 1;
+     [0008, 0003] (0001, IDENTIFIER) {b}
+     [0008, 0005] (0052, ASSIGN    ) {:=}
+     [0008, 0008] (0002, CONST_INT ) {1}
+     [0008, 0009] (0037, SEMICOLON ) {;}
+9    if n = 0 then
+     [0009, 0003] (0017, IF        ) {if}
+     [0009, 0006] (0001, IDENTIFIER) {n}
+     [0009, 0008] (0051, OP_RELAT  ) {=}
+     [0009, 0010] (0002, CONST_INT ) {0}
+     [0009, 0012] (0018, THEN      ) {then}
+10        writeln(a)
+     [0010, 0007] (0055, WRITELN   ) {writeln}
+     [0010, 0014] (0033, OPEN_PAR  ) {(}
+     [0010, 0015] (0001, IDENTIFIER) {a}
+     [0010, 0016] (0034, CLOSE_PAR ) {)}
+11    else
+     [0011, 0003] (0019, ELSE      ) {else}
+12        begin
+     [0012, 0007] (0015, BEGIN     ) {begin}
+13            write(a);
+     [0013, 0011] (0026, WRITE     ) {write}
+     [0013, 0016] (0033, OPEN_PAR  ) {(}
+     [0013, 0017] (0001, IDENTIFIER) {a}
+     [0013, 0018] (0034, CLOSE_PAR ) {)}
+     [0013, 0019] (0037, SEMICOLON ) {;}
+14            write(', ');
+     [0014, 0011] (0026, WRITE     ) {write}
+     [0014, 0016] (0033, OPEN_PAR  ) {(}
+     [0014, 0018] (0006, CONST_STR ) {, }
+     [0014, 0021] (0034, CLOSE_PAR ) {)}
+     [0014, 0022] (0037, SEMICOLON ) {;}
+15            write(b);
+     [0015, 0011] (0026, WRITE     ) {write}
+     [0015, 0016] (0033, OPEN_PAR  ) {(}
+     [0015, 0017] (0001, IDENTIFIER) {b}
+     [0015, 0018] (0034, CLOSE_PAR ) {)}
+     [0015, 0019] (0037, SEMICOLON ) {;}
+16            while a + b <= n do
+     [0016, 0011] (0023, WHILE     ) {while}
+     [0016, 0017] (0001, IDENTIFIER) {a}
+     [0016, 0019] (0050, PLUS      ) {+}
+     [0016, 0021] (0001, IDENTIFIER) {b}
+     [0016, 0023] (0051, OP_RELAT  ) {<=}
+     [0016, 0026] (0001, IDENTIFIER) {n}
+     [0016, 0028] (0024, DO        ) {do}
+17            begin
+     [0017, 0011] (0015, BEGIN     ) {begin}
+18              write(', ');
+     [0018, 0013] (0026, WRITE     ) {write}
+     [0018, 0018] (0033, OPEN_PAR  ) {(}
+     [0018, 0020] (0006, CONST_STR ) {, }
+     [0018, 0023] (0034, CLOSE_PAR ) {)}
+     [0018, 0024] (0037, SEMICOLON ) {;}
+19              write(a + b);
+     [0019, 0013] (0026, WRITE     ) {write}
+     [0019, 0018] (0033, OPEN_PAR  ) {(}
+     [0019, 0019] (0001, IDENTIFIER) {a}
+     [0019, 0021] (0050, PLUS      ) {+}
+     [0019, 0023] (0001, IDENTIFIER) {b}
+     [0019, 0024] (0034, CLOSE_PAR ) {)}
+     [0019, 0025] (0037, SEMICOLON ) {;}
+20              aux := a;
+     [0020, 0013] (0001, IDENTIFIER) {aux}
+     [0020, 0017] (0052, ASSIGN    ) {:=}
+     [0020, 0020] (0001, IDENTIFIER) {a}
+     [0020, 0021] (0037, SEMICOLON ) {;}
+21              a := b;
+     [0021, 0013] (0001, IDENTIFIER) {a}
+     [0021, 0015] (0052, ASSIGN    ) {:=}
+     [0021, 0018] (0001, IDENTIFIER) {b}
+     [0021, 0019] (0037, SEMICOLON ) {;}
+22              b := b + aux;
+     [0022, 0013] (0001, IDENTIFIER) {b}
+     [0022, 0015] (0052, ASSIGN    ) {:=}
+     [0022, 0018] (0001, IDENTIFIER) {b}
+     [0022, 0020] (0050, PLUS      ) {+}
+     [0022, 0022] (0001, IDENTIFIER) {aux}
+     [0022, 0025] (0037, SEMICOLON ) {;}
+23            end;
+     [0023, 0011] (0016, END       ) {end}
+     [0023, 0014] (0037, SEMICOLON ) {;}
+24        end;
+     [0024, 0007] (0016, END       ) {end}
+     [0024, 0010] (0037, SEMICOLON ) {;}
+25  end;
+     [0025, 0001] (0016, END       ) {end}
+     [0025, 0004] (0037, SEMICOLON ) {;}
+27  var n: Integer;
+     [0027, 0001] (0032, VAR       ) {var}
+     [0027, 0005] (0001, IDENTIFIER) {n}
+     [0027, 0006] (0038, DECLR     ) {:}
+     [0027, 0008] (0007, INTEGER   ) {Integer}
+     [0027, 0015] (0037, SEMICOLON ) {;}
+28  begin
+     [0028, 0001] (0015, BEGIN     ) {begin}
+29    read(n);
+     [0029, 0003] (0025, READ      ) {read}
+     [0029, 0007] (0033, OPEN_PAR  ) {(}
+     [0029, 0008] (0001, IDENTIFIER) {n}
+     [0029, 0009] (0034, CLOSE_PAR ) {)}
+     [0029, 0010] (0037, SEMICOLON ) {;}
+30    fib(n);
+     [0030, 0003] (0001, IDENTIFIER) {fib}
+     [0030, 0006] (0033, OPEN_PAR  ) {(}
+     [0030, 0007] (0001, IDENTIFIER) {n}
+     [0030, 0008] (0034, CLOSE_PAR ) {)}
+     [0030, 0009] (0037, SEMICOLON ) {;}
+31  end.
+     [0031, 0001] (0016, END       ) {end}
+     [0031, 0004] (0045, DOT       ) {.}
+     [0032, 0001] (0054, EOF       ) {EOF}

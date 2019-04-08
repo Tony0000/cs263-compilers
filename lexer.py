@@ -1,8 +1,8 @@
 from tokens import Token, Category
 
 RESERVED_KEYWORDS = [
-    'BEGIN', 'END', 'IF', 'ELSE', 'INTEGER', 'REAL', 'CHAR','CONST',
-     'STRING', 'WRITE', 'PROGRAM', 'VAR', 'THEN','BOOLEAN',
+    'BEGIN', 'END', 'IF', 'ELSE', 'INTEGER', 'REAL', 'CHAR', 'CONST',
+     'STRING', 'WRITE', 'PROGRAM', 'VAR', 'THEN', 'BOOLEAN',
      'PROCEDURE', 'FUNCTION', 'EXIT', 'WHILE', 'DO', 'READ',
      'ARRAY', 'OF', 'TYPE', 'STEP', 'CONST', 'AND', 'OR', 'STEP',
      'NOT', 'USES', 'FOR', 'TO', 'WRITELN', 'CONST', 'BREAK', 'CONTINUE'
