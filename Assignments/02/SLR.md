@@ -1,4 +1,4 @@
-# Universidade Federal de Maceió
+# Universidade Federal de Alagoas
 ## Instituto de Computação
 ## Aluno: Antonio Manoel
 
