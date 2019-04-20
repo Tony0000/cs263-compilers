@@ -2,15 +2,15 @@ from enum import Enum
 
 
 class Token:
-    def __init__(self, value, type, col, row):
+    def __init__(self, value, categ, col, row):
         self.value = value
-        self.type = type
+        self.categ = categ
         self.row = row
         self.col = col
 
     def __str__(self):
-        return "\t[{:04d}, {:04d}] ({:04d}, {:10s}) {{{}}}".format(self.row,
-                    self.col+1, self.type.value, self.type.name, self.value)
+        return "              [{:04d}, {:04d}] ({:04d}, {:10s}) {{{}}}".format(self.row,
+                    self.col+1, self.categ.value, self.categ.name, self.value)
 
 
 class Category(Enum):
@@ -60,8 +60,8 @@ class Category(Enum):
     MINUS_UNAR = 44
     DOT = 45
     NOT = 46
-    MULT = 47
-    DIV = 48
+    MULOP = 47
+    ADDOP = 48
     MINUS = 49
     PLUS = 50
     OP_RELAT = 51

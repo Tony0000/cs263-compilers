@@ -1,0 +1,55 @@
+program ShellSort;
+const
+  MaxN := 100;
+type
+  TArray := array [0..MaxN] of Integer;
+var
+    k, n : Integer;
+    v, inv_v: TArray;
+
+procedure echoArray (vector: TArray; size: Integer);
+var i : Integer;
+begin
+  for i := 0 to size do
+   begin
+    write(vector[i]);
+    write(' ')
+   end
+end;
+
+procedure shellsort ( A : TArray; N : Integer );
+var
+  i, j, skip, tmp : Integer;
+begin
+  skip := N/2;
+  while skip > 0 do
+	begin
+    for i := skip to N do
+		begin
+      tmp:=A[i];
+      j:=i;
+      while j >= skip and A[j - skip] > tmp do
+      begin
+        A[j] := A[j - skip];
+        j := j - skip
+      end;
+      A[j] := tmp
+    end;
+    skip := skip/2
+  end;
+  echoArray(A, n)
+end;
+
+begin
+  read(n);
+  n := n-1;
+  for k := 0 to n do
+  begin
+	    read(v[k])
+  end;
+  write('desordenados: ');
+  echoArray(v, n);
+  writeln('');
+  write('ordenados: ');
+  shellsort(v, n)
+end.

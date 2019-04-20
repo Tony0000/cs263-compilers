@@ -1,0 +1,27 @@
+1  program Hello;
+        PROGRAM = program id semicolon LIBRARIES DECLRS SUB_PGM_DECLRS COMPOUND_STMT dot
+           [0001, 0001] (0031, PROGRAM   ) {program}
+           [0001, 0009] (0001, IDENTIFIER) {Hello}
+           [0001, 0014] (0037, SEMICOLON ) {;}
+2  begin
+        LIBRARIES = epsilon
+        DECLRS = epsilon
+        SUB_PGM_DECLRS = epsilon
+        COMPOUND_STMT = begin OPT_STMT end
+           [0002, 0001] (0015, BEGIN     ) {begin}
+3      writeln("Hello world")
+        OPT_STMT = STMT_LIST
+        STMT_LIST = STMT STMT_LISTR
+        STMT = PROCEDURE_STMT
+        PROCEDURE_STMT = writeln lparen WRITE_PARAM_LIST
+           [0003, 0005] (0055, WRITELN   ) {writeln}
+           [0003, 0012] (0033, OPEN_PAR  ) {(}
+        WRITE_PARAM_LIST = const_string FIELD_WIDTH WRITE_PARAM_LISTR
+           [0003, 0014] (0006, CONST_STR ) {Hello world}
+        FIELD_WIDTH = epsilon
+        WRITE_PARAM_LISTR = rparen
+           [0003, 0026] (0034, CLOSE_PAR ) {)}
+4  end.
+        STMT_LISTR = epsilon
+           [0004, 0001] (0016, END       ) {end}
+           [0004, 0004] (0045, DOT       ) {.}

@@ -9,8 +9,8 @@ RESERVED_KEYWORDS = [
  ]
 
 SPECIAL_CHARACTERS = {
-    '[': Category.OPEN_BRA, ']': Category.CLOSE_BRA, '+': Category.PLUS,
-    '-': Category.MINUS, '*': Category.MULT, '/': Category.DIV,
+    '[': Category.OPEN_BRA, ']': Category.CLOSE_BRA, '+': Category.ADDOP,
+    '-': Category.ADDOP, '*': Category.MULOP, '/': Category.MULOP,
     ';': Category.SEMICOLON, ',': Category.COMMA,
     '(': Category.OPEN_PAR, ')': Category.CLOSE_PAR, '.': Category.DOT,
     '<': Category.OP_RELAT, '>': Category.OP_RELAT, '<=': Category.OP_RELAT,
@@ -48,7 +48,7 @@ class Lexer:
 
             self.current_char = self.text[self.col] if len(self.text) > 0 else None
             if(len(self.text) > 0 and self.current_char != '(' and not comment):
-                print("%4d  %s" % (self.row, self.text.rstrip()) )
+                print("%4d  %s" % (self.row, self.text.rstrip()))
 
         elif self.col == len(self.text):
             self.current_char = ' '

@@ -1,4 +1,5 @@
 program Fibonacci;
+var n: Integer;
 procedure fib(n: Integer);
 var
   a, b, aux: Integer;
@@ -15,17 +16,17 @@ begin
           write(b);
           while a + b <= n do
           begin
+            c:= a + b;
             write(', ');
-            write(a + b);
+            write(c);
             aux := a;
             a := b;
-            b := b + aux;
-          end;
-      end;
+            b := b + aux
+          end
+      end
 end;
 
-var n: Integer;
 begin
   read(n);
-  fib(n);
+  fib(n)
 end.

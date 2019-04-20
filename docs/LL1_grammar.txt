@@ -1,0 +1,120 @@
+PROGRAM -> program id semicolon
+ LIBRARIES
+ DECLRS
+ SUB_PGM_DECLRS
+ COMPOUND_STMT dot .
+
+LIBRARIES -> uses ID_LIST semicolon
+| .
+
+ID_LIST -> id ID_LISTR .
+
+ID_LISTR -> comma id ID_LISTR
+| .
+
+DECLRS -> var VAR_DECLR DECLRSR |
+const CONST_DECLR DECLRSR
+| type TYPER DECLRSR
+| .
+
+VAR_DECLR -> ID_LIST dp TYPE semicolon VAR_DECLR
+| .
+
+CONST_DECLR -> id assignop CONST_VALUES semicolon CONST_DECLR | .
+
+CONST_VALUES -> const_string | const_char | const_int | const_real | const_boolean .
+
+TYPE -> STD_TYPE
+| array lbrkt CTRL_VALUE through CTRL_VALUE rbrkt of STD_TYPE .
+
+STD_TYPE -> integer | real | string | boolean | char .
+
+TYPER -> id assignop TYPE semicolon TYPER .
+
+SUB_PGM_DECLRS -> SUB_PGM_DECLR semicolon SUB_PGM_DECLRS
+| .
+
+SUB_PGM_DECLR -> SUB_PGM_HEAD DECLRS COMPOUND_STMT .
+
+SUB_PGM_HEAD -> function SUB_PGM_HEAD_PARAM declr STD_TYPE semicolon
+| procedure SUB_PGM_HEAD_PARAM semicolon .
+
+SUB_PGM_HEAD_PARAM -> id lparen PARAM_LIST rparen .
+
+PARAM_LIST -> ID_LIST dp TYPE PARAM_LISTR
+| .
+
+PARAM_LISTR -> semicolon ID_LIST dp TYPE PARAM_LIST
+| .
+
+COMPOUND_STMT -> begin OPT_STMT end .
+
+OPT_STMT -> STMT_LIST | .
+
+STMT_LIST -> STMT STMT_LISTR .
+
+STMT_LISTR -> semicolon STMT STMT_LISTR
+| .
+
+STMT -> VARIABLE assignop EXPRESSION
+| COMPOUND_STMT
+| PROCEDURE_STMT
+| if EXPRESSION_LIST then STMT OPT_CONDITIONAL_STMT
+| while EXPRESSION_LIST do STMT
+| for id assignop CTRL_VALUE to CTRL_VALUE OPT_FOR_STEP do COMPOUND_STMT .
+
+CTRL_VALUE -> id | const_int.
+
+OPT_CONDITIONAL_STMT -> else STMT | .
+
+OPT_FOR_STEP -> step const_int | .
+
+PROCEDURE_STMT -> read lparen ID_LIST rparen
+| write lparen WRITE_PARAM_LIST
+| writeln lparen WRITE_PARAM_LIST
+| id lparen ID_LIST rparen .
+
+WRITE_PARAM_LIST -> const_string FIELD_WIDTH WRITE_PARAM_LISTR
+| VARIABLE FIELD_WIDTH WRITE_PARAM_LISTR .
+
+WRITE_PARAM_LISTR -> comma WRITE_PARAM_LIST
+| rparen .
+
+FIELD_WIDTH -> dp const_int PRECISION | .
+
+PRECISION -> dp const_int | .
+
+VARIABLE -> id INDEX.
+
+INDEX -> lbrkt SIMPLE_EXPRESSION rbrkt
+| .
+
+VARIABLE_LIST -> VARIABLE VARIABLE_LISTR .
+
+VARIABLE_LISTR -> comma VARIABLE_LIST | .
+
+EXPRESSION_LIST ->  EXPRESSION EXPRESSION_LISTR .
+
+EXPRESSION_LISTR ->  logicop EXPRESSION_LIST | .
+
+EXPRESSION -> SIMPLE_EXPRESSION EXPRESSIONR .
+
+EXPRESSIONR -> relop SIMPLE_EXPRESSION
+| .
+
+SIMPLE_EXPRESSION -> TERM SIMPLE_EXPRESSIONR
+| SIGN TERM SIMPLE_EXPRESSIONR .
+
+SIMPLE_EXPRESSIONR -> addop SIMPLE_EXPRESSION | .
+
+TERM -> FACTOR TERMR .
+
+TERMR -> mulop FACTOR TERMR | .
+
+FACTOR -> VARIABLE
+| const_int
+| const_real
+| not FACTOR .
+
+SIGN -> plus
+| minus .

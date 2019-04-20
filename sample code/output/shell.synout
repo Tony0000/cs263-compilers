@@ -1,0 +1,716 @@
+1  program ShellSort;
+        PROGRAM = program id semicolon LIBRARIES DECLRS SUB_PGM_DECLRS COMPOUND_STMT dot
+           [0001, 0001] (0031, PROGRAM   ) {program}
+           [0001, 0009] (0001, IDENTIFIER) {ShellSort}
+           [0001, 0018] (0037, SEMICOLON ) {;}
+2  const
+        LIBRARIES = epsilon
+        DECLRS = const CONST_DECLRS
+           [0002, 0001] (0056, CONST     ) {const}
+3    MaxN := 100;
+        CONST_DECLRS = id assignop CONST_VALUES semicolon CONST_DECLR
+           [0003, 0003] (0001, IDENTIFIER) {MaxN}
+           [0003, 0008] (0052, ASSIGN    ) {:=}
+           [0003, 0011] (0002, CONST_INT ) {100}
+           [0003, 0014] (0037, SEMICOLON ) {;}
+4  type
+        CONST_DECLRS = epsilon
+        DECLRS = type NEW_TYPE DECLRSR
+           [0004, 0001] (0027, TYPE      ) {type}
+5    TArray := array [0..MaxN] of Integer;
+        NEW_TYPE = id assignop TYPE semicolon NEW_TYPE
+           [0005, 0003] (0001, IDENTIFIER) {TArray}
+           [0005, 0010] (0052, ASSIGN    ) {:=}
+        TYPE = array lbrkt CTRL_VALUE through CTRL_VALUE rbrkt of STD_TYPE
+           [0005, 0013] (0029, ARRAY     ) {array}
+           [0005, 0019] (0035, OPEN_BRA  ) {[}
+        CTRL_VALUE = const_int
+           [0005, 0020] (0002, CONST_INT ) {0}
+           [0005, 0021] (0043, THROUGH   ) {..}
+        CTRL_VALUE = id
+           [0005, 0023] (0001, IDENTIFIER) {MaxN}
+           [0005, 0027] (0036, CLOSE_BRA ) {]}
+           [0005, 0029] (0028, OF        ) {of}
+        STD_TYPE =  Integer
+           [0005, 0032] (0007, INTEGER   ) {Integer}
+           [0005, 0039] (0037, SEMICOLON ) {;}
+6  var
+new_type = epsilon
+        DECLRS = var VAR_DECLRS
+           [0006, 0001] (0032, VAR       ) {var}
+7      k, n : Integer;
+        VAR_DECLRS = ID_LIST dp TYPE semicolon VAR_DECLRS
+        ID_LIST = id ID_LISTR
+           [0007, 0005] (0001, IDENTIFIER) {k}
+        ID_LISTR = comma id ID_LISTR
+           [0007, 0006] (0042, COMMA     ) {,}
+           [0007, 0008] (0001, IDENTIFIER) {n}
+        ID_LISTR = epsilon
+           [0007, 0010] (0038, DECLR     ) {:}
+        TYPE = STD_TYPE
+        STD_TYPE =  Integer
+           [0007, 0012] (0007, INTEGER   ) {Integer}
+           [0007, 0019] (0037, SEMICOLON ) {;}
+8      v, inv_v: TArray;
+        VAR_DECLRS = ID_LIST dp TYPE semicolon VAR_DECLRS
+        ID_LIST = id ID_LISTR
+           [0008, 0005] (0001, IDENTIFIER) {v}
+        ID_LISTR = comma id ID_LISTR
+           [0008, 0006] (0042, COMMA     ) {,}
+           [0008, 0008] (0001, IDENTIFIER) {inv_v}
+        ID_LISTR = epsilon
+           [0008, 0013] (0038, DECLR     ) {:}
+        TYPE = STD_TYPE
+        STD_TYPE =  TArray
+           [0008, 0015] (0001, IDENTIFIER) {TArray}
+           [0008, 0021] (0037, SEMICOLON ) {;}
+10  procedure echoArray (vector: TArray; size: Integer);
+        VAR_DECLRS = epsilon
+        DECLRS = epsilon
+        SUB_PGM_DECLRS = SUB_PGM_DECLR semicolon SUB_PGM_DECLRS
+        SUB_PGM_DECLR = SUB_PGM_HEAD DECLRS COMPOUND_STMT
+        SUB_PGM_HEAD = procedure SUB_PGM_HEAD_PARAM semicolon
+           [0010, 0001] (0014, PROCEDURE ) {procedure}
+        SUB_PGM_HEAD_PARAM = id lparen PARAM_LIST rparen
+           [0010, 0011] (0001, IDENTIFIER) {echoArray}
+           [0010, 0021] (0033, OPEN_PAR  ) {(}
+        PARAM_LIST = ID_LIST dp TYPE PARAM_LISTR
+        ID_LIST = id ID_LISTR
+           [0010, 0022] (0001, IDENTIFIER) {vector}
+        ID_LISTR = epsilon
+           [0010, 0028] (0038, DECLR     ) {:}
+        TYPE = STD_TYPE
+        STD_TYPE =  TArray
+           [0010, 0030] (0001, IDENTIFIER) {TArray}
+        PARAM_LISTR = semicolon ID_LIST dp TYPE PARAM_LIST
+           [0010, 0036] (0037, SEMICOLON ) {;}
+        ID_LIST = id ID_LISTR
+           [0010, 0038] (0001, IDENTIFIER) {size}
+        ID_LISTR = epsilon
+           [0010, 0042] (0038, DECLR     ) {:}
+        TYPE = STD_TYPE
+        STD_TYPE =  Integer
+           [0010, 0044] (0007, INTEGER   ) {Integer}
+        PARAM_LIST = epsilon
+           [0010, 0051] (0034, CLOSE_PAR ) {)}
+           [0010, 0052] (0037, SEMICOLON ) {;}
+11  var i : Integer;
+        DECLRS = var VAR_DECLRS
+           [0011, 0001] (0032, VAR       ) {var}
+        VAR_DECLRS = ID_LIST dp TYPE semicolon VAR_DECLRS
+        ID_LIST = id ID_LISTR
+           [0011, 0005] (0001, IDENTIFIER) {i}
+        ID_LISTR = epsilon
+           [0011, 0007] (0038, DECLR     ) {:}
+        TYPE = STD_TYPE
+        STD_TYPE =  Integer
+           [0011, 0009] (0007, INTEGER   ) {Integer}
+           [0011, 0016] (0037, SEMICOLON ) {;}
+12  begin
+        VAR_DECLRS = epsilon
+        DECLRS = epsilon
+        COMPOUND_STMT = begin OPT_STMT end
+           [0012, 0001] (0015, BEGIN     ) {begin}
+13    for i := 0 to size do
+        OPT_STMT = STMT_LIST
+        STMT_LIST = STMT STMT_LISTR
+        STMT = for id assignop CTRL_VALUE to CTRL_VALUE OPT_FOR_STEP do COMPOUND_STMT
+           [0013, 0003] (0020, FOR       ) {for}
+           [0013, 0007] (0001, IDENTIFIER) {i}
+           [0013, 0009] (0052, ASSIGN    ) {:=}
+        CTRL_VALUE = const_int
+           [0013, 0012] (0002, CONST_INT ) {0}
+           [0013, 0014] (0021, TO        ) {to}
+        CTRL_VALUE = id
+           [0013, 0017] (0001, IDENTIFIER) {size}
+        OPT_FOR_STEP = epsilon
+           [0013, 0022] (0024, DO        ) {do}
+14     begin
+        COMPOUND_STMT = begin OPT_STMT end
+           [0014, 0004] (0015, BEGIN     ) {begin}
+15      write(vector[i]);
+        OPT_STMT = STMT_LIST
+        STMT_LIST = STMT STMT_LISTR
+        STMT = PROCEDURE_STMT
+        PROCEDURE_STMT = write lparen WRITE_PARAM_LIST
+           [0015, 0005] (0026, WRITE     ) {write}
+           [0015, 0010] (0033, OPEN_PAR  ) {(}
+        WRITE_PARAM_LIST = VARIABLE FIELD_WIDTH WRITE_PARAM_LISTR
+        VARIABLE = id INDEX
+           [0015, 0011] (0001, IDENTIFIER) {vector}
+        INDEX = lbrkt SIMPLE_EXPRESSION rbrkt
+           [0015, 0017] (0035, OPEN_BRA  ) {[}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0015, 0018] (0001, IDENTIFIER) {i}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+           [0015, 0019] (0036, CLOSE_BRA ) {]}
+        FIELD_WIDTH = epsilon
+        WRITE_PARAM_LISTR = rparen
+           [0015, 0020] (0034, CLOSE_PAR ) {)}
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0015, 0021] (0037, SEMICOLON ) {;}
+16      write(' ')
+        STMT = PROCEDURE_STMT
+        PROCEDURE_STMT = write lparen WRITE_PARAM_LIST
+           [0016, 0005] (0026, WRITE     ) {write}
+           [0016, 0010] (0033, OPEN_PAR  ) {(}
+        WRITE_PARAM_LIST = const_string FIELD_WIDTH WRITE_PARAM_LISTR
+           [0016, 0012] (0006, CONST_STR ) { }
+        FIELD_WIDTH = epsilon
+        WRITE_PARAM_LISTR = rparen
+           [0016, 0014] (0034, CLOSE_PAR ) {)}
+17     end
+        STMT_LISTR = epsilon
+           [0017, 0004] (0016, END       ) {end}
+18  end;
+        STMT_LISTR = epsilon
+           [0018, 0001] (0016, END       ) {end}
+           [0018, 0004] (0037, SEMICOLON ) {;}
+20  procedure shellsort ( A : TArray; N : Integer );
+        SUB_PGM_DECLRS = SUB_PGM_DECLR semicolon SUB_PGM_DECLRS
+        SUB_PGM_DECLR = SUB_PGM_HEAD DECLRS COMPOUND_STMT
+        SUB_PGM_HEAD = procedure SUB_PGM_HEAD_PARAM semicolon
+           [0020, 0001] (0014, PROCEDURE ) {procedure}
+        SUB_PGM_HEAD_PARAM = id lparen PARAM_LIST rparen
+           [0020, 0011] (0001, IDENTIFIER) {shellsort}
+           [0020, 0021] (0033, OPEN_PAR  ) {(}
+        PARAM_LIST = ID_LIST dp TYPE PARAM_LISTR
+        ID_LIST = id ID_LISTR
+           [0020, 0023] (0001, IDENTIFIER) {A}
+        ID_LISTR = epsilon
+           [0020, 0025] (0038, DECLR     ) {:}
+        TYPE = STD_TYPE
+        STD_TYPE =  TArray
+           [0020, 0027] (0001, IDENTIFIER) {TArray}
+        PARAM_LISTR = semicolon ID_LIST dp TYPE PARAM_LIST
+           [0020, 0033] (0037, SEMICOLON ) {;}
+        ID_LIST = id ID_LISTR
+           [0020, 0035] (0001, IDENTIFIER) {N}
+        ID_LISTR = epsilon
+           [0020, 0037] (0038, DECLR     ) {:}
+        TYPE = STD_TYPE
+        STD_TYPE =  Integer
+           [0020, 0039] (0007, INTEGER   ) {Integer}
+        PARAM_LIST = epsilon
+           [0020, 0047] (0034, CLOSE_PAR ) {)}
+           [0020, 0048] (0037, SEMICOLON ) {;}
+21  var
+        DECLRS = var VAR_DECLRS
+           [0021, 0001] (0032, VAR       ) {var}
+22    i, j, skip, tmp : Integer;
+        VAR_DECLRS = ID_LIST dp TYPE semicolon VAR_DECLRS
+        ID_LIST = id ID_LISTR
+           [0022, 0003] (0001, IDENTIFIER) {i}
+        ID_LISTR = comma id ID_LISTR
+           [0022, 0004] (0042, COMMA     ) {,}
+           [0022, 0006] (0001, IDENTIFIER) {j}
+        ID_LISTR = comma id ID_LISTR
+           [0022, 0007] (0042, COMMA     ) {,}
+           [0022, 0009] (0001, IDENTIFIER) {skip}
+        ID_LISTR = comma id ID_LISTR
+           [0022, 0013] (0042, COMMA     ) {,}
+           [0022, 0015] (0001, IDENTIFIER) {tmp}
+        ID_LISTR = epsilon
+           [0022, 0019] (0038, DECLR     ) {:}
+        TYPE = STD_TYPE
+        STD_TYPE =  Integer
+           [0022, 0021] (0007, INTEGER   ) {Integer}
+           [0022, 0028] (0037, SEMICOLON ) {;}
+23  begin
+        VAR_DECLRS = epsilon
+        DECLRS = epsilon
+        COMPOUND_STMT = begin OPT_STMT end
+           [0023, 0001] (0015, BEGIN     ) {begin}
+24    skip := N/2;
+        OPT_STMT = STMT_LIST
+        STMT_LIST = STMT STMT_LISTR
+        STMT = VARIABLE assignop EXPRESSION
+        VARIABLE = id INDEX
+           [0024, 0003] (0001, IDENTIFIER) {skip}
+        INDEX = epsilon
+           [0024, 0008] (0052, ASSIGN    ) {:=}
+        EXPRESSION = SIMPLE_EXPRESSION EXPRESSIONR
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0024, 0011] (0001, IDENTIFIER) {N}
+        INDEX = epsilon
+        TERMR = mulop FACTOR TERMR
+           [0024, 0012] (0047, MULOP     ) {/}
+        FACTOR = const_int
+           [0024, 0013] (0002, CONST_INT ) {2}
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSIONR = epsilon
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0024, 0014] (0037, SEMICOLON ) {;}
+25    while skip > 0 do
+        STMT = while EXPRESSION do STMT
+           [0025, 0003] (0023, WHILE     ) {while}
+        EXPRESSION_LIST = EXPRESSION EXPRESSION_LISTR
+        EXPRESSION = SIMPLE_EXPRESSION EXPRESSIONR
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0025, 0009] (0001, IDENTIFIER) {skip}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSIONR = relop SIMPLE_EXPRESSION
+           [0025, 0014] (0051, OP_RELAT  ) {>}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = const_int
+           [0025, 0016] (0002, CONST_INT ) {0}
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSION_LISTR = epsilon
+           [0025, 0018] (0024, DO        ) {do}
+26    begin
+        STMT = COMPOUND_STMT
+        COMPOUND_STMT = begin OPT_STMT end
+           [0026, 0002] (0015, BEGIN     ) {begin}
+27      for i := skip to N do
+        OPT_STMT = STMT_LIST
+        STMT_LIST = STMT STMT_LISTR
+        STMT = for id assignop CTRL_VALUE to CTRL_VALUE OPT_FOR_STEP do COMPOUND_STMT
+           [0027, 0005] (0020, FOR       ) {for}
+           [0027, 0009] (0001, IDENTIFIER) {i}
+           [0027, 0011] (0052, ASSIGN    ) {:=}
+        CTRL_VALUE = id
+           [0027, 0014] (0001, IDENTIFIER) {skip}
+           [0027, 0019] (0021, TO        ) {to}
+        CTRL_VALUE = id
+           [0027, 0022] (0001, IDENTIFIER) {N}
+        OPT_FOR_STEP = epsilon
+           [0027, 0024] (0024, DO        ) {do}
+28            begin
+        COMPOUND_STMT = begin OPT_STMT end
+           [0028, 0003] (0015, BEGIN     ) {begin}
+29        tmp:=A[i];
+        OPT_STMT = STMT_LIST
+        STMT_LIST = STMT STMT_LISTR
+        STMT = VARIABLE assignop EXPRESSION
+        VARIABLE = id INDEX
+           [0029, 0007] (0001, IDENTIFIER) {tmp}
+        INDEX = epsilon
+           [0029, 0010] (0052, ASSIGN    ) {:=}
+        EXPRESSION = SIMPLE_EXPRESSION EXPRESSIONR
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0029, 0012] (0001, IDENTIFIER) {A}
+        INDEX = lbrkt SIMPLE_EXPRESSION rbrkt
+           [0029, 0013] (0035, OPEN_BRA  ) {[}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0029, 0014] (0001, IDENTIFIER) {i}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+           [0029, 0015] (0036, CLOSE_BRA ) {]}
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSIONR = epsilon
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0029, 0016] (0037, SEMICOLON ) {;}
+30        j:=i;
+        STMT = VARIABLE assignop EXPRESSION
+        VARIABLE = id INDEX
+           [0030, 0007] (0001, IDENTIFIER) {j}
+        INDEX = epsilon
+           [0030, 0008] (0052, ASSIGN    ) {:=}
+        EXPRESSION = SIMPLE_EXPRESSION EXPRESSIONR
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0030, 0010] (0001, IDENTIFIER) {i}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSIONR = epsilon
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0030, 0011] (0037, SEMICOLON ) {;}
+31        while j >= skip and A[j - skip] > tmp do
+        STMT = while EXPRESSION do STMT
+           [0031, 0007] (0023, WHILE     ) {while}
+        EXPRESSION_LIST = EXPRESSION EXPRESSION_LISTR
+        EXPRESSION = SIMPLE_EXPRESSION EXPRESSIONR
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0031, 0013] (0001, IDENTIFIER) {j}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSIONR = relop SIMPLE_EXPRESSION
+           [0031, 0015] (0051, OP_RELAT  ) {>=}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0031, 0018] (0001, IDENTIFIER) {skip}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSION_LISTR = logicop EXPRESSION_LIST
+           [0031, 0023] (0057, AND       ) {and}
+        EXPRESSION_LIST = EXPRESSION EXPRESSION_LISTR
+        EXPRESSION = SIMPLE_EXPRESSION EXPRESSIONR
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0031, 0027] (0001, IDENTIFIER) {A}
+        INDEX = lbrkt SIMPLE_EXPRESSION rbrkt
+           [0031, 0028] (0035, OPEN_BRA  ) {[}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0031, 0029] (0001, IDENTIFIER) {j}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = addop SIMPLE_EXPRESSION
+           [0031, 0031] (0048, ADDOP     ) {-}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0031, 0033] (0001, IDENTIFIER) {skip}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+           [0031, 0037] (0036, CLOSE_BRA ) {]}
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSIONR = relop SIMPLE_EXPRESSION
+           [0031, 0039] (0051, OP_RELAT  ) {>}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0031, 0041] (0001, IDENTIFIER) {tmp}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSION_LISTR = epsilon
+           [0031, 0045] (0024, DO        ) {do}
+32        begin
+        STMT = COMPOUND_STMT
+        COMPOUND_STMT = begin OPT_STMT end
+           [0032, 0007] (0015, BEGIN     ) {begin}
+33          A[j] := A[j - skip];
+        OPT_STMT = STMT_LIST
+        STMT_LIST = STMT STMT_LISTR
+        STMT = VARIABLE assignop EXPRESSION
+        VARIABLE = id INDEX
+           [0033, 0009] (0001, IDENTIFIER) {A}
+        INDEX = lbrkt SIMPLE_EXPRESSION rbrkt
+           [0033, 0010] (0035, OPEN_BRA  ) {[}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0033, 0011] (0001, IDENTIFIER) {j}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+           [0033, 0012] (0036, CLOSE_BRA ) {]}
+           [0033, 0014] (0052, ASSIGN    ) {:=}
+        EXPRESSION = SIMPLE_EXPRESSION EXPRESSIONR
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0033, 0017] (0001, IDENTIFIER) {A}
+        INDEX = lbrkt SIMPLE_EXPRESSION rbrkt
+           [0033, 0018] (0035, OPEN_BRA  ) {[}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0033, 0019] (0001, IDENTIFIER) {j}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = addop SIMPLE_EXPRESSION
+           [0033, 0021] (0048, ADDOP     ) {-}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0033, 0023] (0001, IDENTIFIER) {skip}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+           [0033, 0027] (0036, CLOSE_BRA ) {]}
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSIONR = epsilon
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0033, 0028] (0037, SEMICOLON ) {;}
+34          j := j - skip
+        STMT = VARIABLE assignop EXPRESSION
+        VARIABLE = id INDEX
+           [0034, 0009] (0001, IDENTIFIER) {j}
+        INDEX = epsilon
+           [0034, 0011] (0052, ASSIGN    ) {:=}
+        EXPRESSION = SIMPLE_EXPRESSION EXPRESSIONR
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0034, 0014] (0001, IDENTIFIER) {j}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = addop SIMPLE_EXPRESSION
+           [0034, 0016] (0048, ADDOP     ) {-}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0034, 0018] (0001, IDENTIFIER) {skip}
+35        end;
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSIONR = epsilon
+        STMT_LISTR = epsilon
+           [0035, 0007] (0016, END       ) {end}
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0035, 0010] (0037, SEMICOLON ) {;}
+36        A[j] := tmp
+        STMT = VARIABLE assignop EXPRESSION
+        VARIABLE = id INDEX
+           [0036, 0007] (0001, IDENTIFIER) {A}
+        INDEX = lbrkt SIMPLE_EXPRESSION rbrkt
+           [0036, 0008] (0035, OPEN_BRA  ) {[}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0036, 0009] (0001, IDENTIFIER) {j}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+           [0036, 0010] (0036, CLOSE_BRA ) {]}
+           [0036, 0012] (0052, ASSIGN    ) {:=}
+        EXPRESSION = SIMPLE_EXPRESSION EXPRESSIONR
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0036, 0015] (0001, IDENTIFIER) {tmp}
+37      end;
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSIONR = epsilon
+        STMT_LISTR = epsilon
+           [0037, 0005] (0016, END       ) {end}
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0037, 0008] (0037, SEMICOLON ) {;}
+38      skip := skip/2
+        STMT = VARIABLE assignop EXPRESSION
+        VARIABLE = id INDEX
+           [0038, 0005] (0001, IDENTIFIER) {skip}
+        INDEX = epsilon
+           [0038, 0010] (0052, ASSIGN    ) {:=}
+        EXPRESSION = SIMPLE_EXPRESSION EXPRESSIONR
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0038, 0013] (0001, IDENTIFIER) {skip}
+        INDEX = epsilon
+        TERMR = mulop FACTOR TERMR
+           [0038, 0017] (0047, MULOP     ) {/}
+        FACTOR = const_int
+           [0038, 0018] (0002, CONST_INT ) {2}
+39    end;
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSIONR = epsilon
+        STMT_LISTR = epsilon
+           [0039, 0003] (0016, END       ) {end}
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0039, 0006] (0037, SEMICOLON ) {;}
+40    echoArray(A, n)
+        STMT = PROCEDURE_STMT
+        PROCEDURE_STMT = id lparen ID_LIST rparen
+           [0040, 0003] (0001, IDENTIFIER) {echoArray}
+           [0040, 0012] (0033, OPEN_PAR  ) {(}
+        ID_LIST = id ID_LISTR
+           [0040, 0013] (0001, IDENTIFIER) {A}
+        ID_LISTR = comma id ID_LISTR
+           [0040, 0014] (0042, COMMA     ) {,}
+           [0040, 0016] (0001, IDENTIFIER) {n}
+        ID_LISTR = epsilon
+           [0040, 0017] (0034, CLOSE_PAR ) {)}
+41  end;
+        STMT_LISTR = epsilon
+           [0041, 0001] (0016, END       ) {end}
+           [0041, 0004] (0037, SEMICOLON ) {;}
+43  begin
+        SUB_PGM_DECLRS = epsilon
+        COMPOUND_STMT = begin OPT_STMT end
+           [0043, 0001] (0015, BEGIN     ) {begin}
+44    read(n);
+        OPT_STMT = STMT_LIST
+        STMT_LIST = STMT STMT_LISTR
+        STMT = PROCEDURE_STMT
+        PROCEDURE_STMT = read lparen VAR_LIST rparen
+           [0044, 0003] (0025, READ      ) {read}
+           [0044, 0007] (0033, OPEN_PAR  ) {(}
+        VARIABLE = id INDEX
+           [0044, 0008] (0001, IDENTIFIER) {n}
+        INDEX = epsilon
+        VAR_LISTR = epsilon
+           [0044, 0009] (0034, CLOSE_PAR ) {)}
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0044, 0010] (0037, SEMICOLON ) {;}
+45    n := n-1;
+        STMT = VARIABLE assignop EXPRESSION
+        VARIABLE = id INDEX
+           [0045, 0003] (0001, IDENTIFIER) {n}
+        INDEX = epsilon
+           [0045, 0005] (0052, ASSIGN    ) {:=}
+        EXPRESSION = SIMPLE_EXPRESSION EXPRESSIONR
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0045, 0008] (0001, IDENTIFIER) {n}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = addop SIMPLE_EXPRESSION
+           [0045, 0009] (0048, ADDOP     ) {-}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = const_int
+           [0045, 0010] (0002, CONST_INT ) {1}
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+        EXPRESSIONR = epsilon
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0045, 0011] (0037, SEMICOLON ) {;}
+46    for k := 0 to n do
+        STMT = for id assignop CTRL_VALUE to CTRL_VALUE OPT_FOR_STEP do COMPOUND_STMT
+           [0046, 0003] (0020, FOR       ) {for}
+           [0046, 0007] (0001, IDENTIFIER) {k}
+           [0046, 0009] (0052, ASSIGN    ) {:=}
+        CTRL_VALUE = const_int
+           [0046, 0012] (0002, CONST_INT ) {0}
+           [0046, 0014] (0021, TO        ) {to}
+        CTRL_VALUE = id
+           [0046, 0017] (0001, IDENTIFIER) {n}
+        OPT_FOR_STEP = epsilon
+           [0046, 0019] (0024, DO        ) {do}
+47    begin
+        COMPOUND_STMT = begin OPT_STMT end
+           [0047, 0003] (0015, BEGIN     ) {begin}
+48        read(v[k])
+        OPT_STMT = STMT_LIST
+        STMT_LIST = STMT STMT_LISTR
+        STMT = PROCEDURE_STMT
+        PROCEDURE_STMT = read lparen VAR_LIST rparen
+           [0048, 0006] (0025, READ      ) {read}
+           [0048, 0010] (0033, OPEN_PAR  ) {(}
+        VARIABLE = id INDEX
+           [0048, 0011] (0001, IDENTIFIER) {v}
+        INDEX = lbrkt SIMPLE_EXPRESSION rbrkt
+           [0048, 0012] (0035, OPEN_BRA  ) {[}
+        SIMPLE_EXPRESSION = TERM SIMPLE_EXPRESSIONR
+        TERM = FACTOR TERMR
+        FACTOR = VARIABLE
+        VARIABLE = id INDEX
+           [0048, 0013] (0001, IDENTIFIER) {k}
+        INDEX = epsilon
+        TERMR = epsilon
+        SIMPLE_EXPRESSIONR = epsilon
+           [0048, 0014] (0036, CLOSE_BRA ) {]}
+        VAR_LISTR = epsilon
+           [0048, 0015] (0034, CLOSE_PAR ) {)}
+49    end;
+        STMT_LISTR = epsilon
+           [0049, 0003] (0016, END       ) {end}
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0049, 0006] (0037, SEMICOLON ) {;}
+50    write('desordenados: ');
+        STMT = PROCEDURE_STMT
+        PROCEDURE_STMT = write lparen WRITE_PARAM_LIST
+           [0050, 0003] (0026, WRITE     ) {write}
+           [0050, 0008] (0033, OPEN_PAR  ) {(}
+        WRITE_PARAM_LIST = const_string FIELD_WIDTH WRITE_PARAM_LISTR
+           [0050, 0010] (0006, CONST_STR ) {desordenados: }
+        FIELD_WIDTH = epsilon
+        WRITE_PARAM_LISTR = rparen
+           [0050, 0025] (0034, CLOSE_PAR ) {)}
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0050, 0026] (0037, SEMICOLON ) {;}
+51    echoArray(v, n);
+        STMT = PROCEDURE_STMT
+        PROCEDURE_STMT = id lparen ID_LIST rparen
+           [0051, 0003] (0001, IDENTIFIER) {echoArray}
+           [0051, 0012] (0033, OPEN_PAR  ) {(}
+        ID_LIST = id ID_LISTR
+           [0051, 0013] (0001, IDENTIFIER) {v}
+        ID_LISTR = comma id ID_LISTR
+           [0051, 0014] (0042, COMMA     ) {,}
+           [0051, 0016] (0001, IDENTIFIER) {n}
+        ID_LISTR = epsilon
+           [0051, 0017] (0034, CLOSE_PAR ) {)}
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0051, 0018] (0037, SEMICOLON ) {;}
+52    writeln('');
+        STMT = PROCEDURE_STMT
+        PROCEDURE_STMT = writeln lparen WRITE_PARAM_LIST
+           [0052, 0003] (0055, WRITELN   ) {writeln}
+           [0052, 0010] (0033, OPEN_PAR  ) {(}
+        WRITE_PARAM_LIST = const_string FIELD_WIDTH WRITE_PARAM_LISTR
+           [0052, 0012] (0006, CONST_STR ) {}
+        FIELD_WIDTH = epsilon
+        WRITE_PARAM_LISTR = rparen
+           [0052, 0013] (0034, CLOSE_PAR ) {)}
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0052, 0014] (0037, SEMICOLON ) {;}
+53    write('ordenados: ');
+        STMT = PROCEDURE_STMT
+        PROCEDURE_STMT = write lparen WRITE_PARAM_LIST
+           [0053, 0003] (0026, WRITE     ) {write}
+           [0053, 0008] (0033, OPEN_PAR  ) {(}
+        WRITE_PARAM_LIST = const_string FIELD_WIDTH WRITE_PARAM_LISTR
+           [0053, 0010] (0006, CONST_STR ) {ordenados: }
+        FIELD_WIDTH = epsilon
+        WRITE_PARAM_LISTR = rparen
+           [0053, 0022] (0034, CLOSE_PAR ) {)}
+        STMT_LISTR = semicolon STMT STMT_LISTR
+           [0053, 0023] (0037, SEMICOLON ) {;}
+54    shellsort(v, n)
+        STMT = PROCEDURE_STMT
+        PROCEDURE_STMT = id lparen ID_LIST rparen
+           [0054, 0003] (0001, IDENTIFIER) {shellsort}
+           [0054, 0012] (0033, OPEN_PAR  ) {(}
+        ID_LIST = id ID_LISTR
+           [0054, 0013] (0001, IDENTIFIER) {v}
+        ID_LISTR = comma id ID_LISTR
+           [0054, 0014] (0042, COMMA     ) {,}
+           [0054, 0016] (0001, IDENTIFIER) {n}
+        ID_LISTR = epsilon
+           [0054, 0017] (0034, CLOSE_PAR ) {)}
+55  end.
+        STMT_LISTR = epsilon
+           [0055, 0001] (0016, END       ) {end}
+           [0055, 0004] (0045, DOT       ) {.}
