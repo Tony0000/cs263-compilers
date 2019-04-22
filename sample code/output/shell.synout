@@ -21,12 +21,12 @@
         NEW_TYPE = id assignop TYPE semicolon NEW_TYPE
            [0005, 0003] (0001, IDENTIFIER) {TArray}
            [0005, 0010] (0052, ASSIGN    ) {:=}
-        TYPE = array lbrkt CTRL_VALUE through CTRL_VALUE rbrkt of STD_TYPE
+        TYPE = array lbrkt CTRL_VALUE double_dot CTRL_VALUE rbrkt of STD_TYPE
            [0005, 0013] (0029, ARRAY     ) {array}
            [0005, 0019] (0035, OPEN_BRA  ) {[}
         CTRL_VALUE = const_int
            [0005, 0020] (0002, CONST_INT ) {0}
-           [0005, 0021] (0043, THROUGH   ) {..}
+           [0005, 0021] (0043, DOUBLE_DOT) {..}
         CTRL_VALUE = id
            [0005, 0023] (0001, IDENTIFIER) {MaxN}
            [0005, 0027] (0036, CLOSE_BRA ) {]}
@@ -35,7 +35,7 @@
            [0005, 0032] (0007, INTEGER   ) {Integer}
            [0005, 0039] (0037, SEMICOLON ) {;}
 6  var
-new_type = epsilon
+        NEW_TYPE = epsilon
         DECLRS = var VAR_DECLRS
            [0006, 0001] (0032, VAR       ) {var}
 7      k, n : Integer;

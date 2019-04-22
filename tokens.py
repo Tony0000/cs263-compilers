@@ -51,12 +51,12 @@ class Category(Enum):
     OPEN_BRA = 35
     CLOSE_BRA = 36
     SEMICOLON = 37
-    DECLR = 38
+    COLON = 38
     QUOTE = 39
     OPEN_COM = 40
     CLOSE_COM = 41
     COMMA = 42
-    THROUGH = 43
+    DOUBLE_DOT = 43
     MINUS_UNAR = 44
     DOT = 45
     NOT = 46

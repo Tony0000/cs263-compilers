@@ -15,7 +15,7 @@ SPECIAL_CHARACTERS = {
     '(': Category.OPEN_PAR, ')': Category.CLOSE_PAR, '.': Category.DOT,
     '<': Category.OP_RELAT, '>': Category.OP_RELAT, '<=': Category.OP_RELAT,
     '>=': Category.OP_RELAT, '=': Category.OP_RELAT, ':=': Category.ASSIGN,
-    ':': Category.DECLR, '..': Category.THROUGH
+    ':': Category.COLON, '..': Category.DOUBLE_DOT
 }
 
 

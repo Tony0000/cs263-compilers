@@ -11,7 +11,7 @@
         ID_LIST = id ID_LISTR
            [0002, 0005] (0001, IDENTIFIER) {n}
         ID_LISTR = epsilon
-           [0002, 0006] (0038, DECLR     ) {:}
+           [0002, 0006] (0038, COLON     ) {:}
         TYPE = STD_TYPE
         STD_TYPE =  Integer
            [0002, 0008] (0007, INTEGER   ) {Integer}
@@ -30,7 +30,7 @@
         ID_LIST = id ID_LISTR
            [0003, 0015] (0001, IDENTIFIER) {n}
         ID_LISTR = epsilon
-           [0003, 0016] (0038, DECLR     ) {:}
+           [0003, 0016] (0038, COLON     ) {:}
         TYPE = STD_TYPE
         STD_TYPE =  Integer
            [0003, 0018] (0007, INTEGER   ) {Integer}
@@ -51,7 +51,7 @@
            [0005, 0007] (0042, COMMA     ) {,}
            [0005, 0009] (0001, IDENTIFIER) {aux}
         ID_LISTR = epsilon
-           [0005, 0012] (0038, DECLR     ) {:}
+           [0005, 0012] (0038, COLON     ) {:}
         TYPE = STD_TYPE
         STD_TYPE =  Integer
            [0005, 0014] (0007, INTEGER   ) {Integer}
@@ -356,7 +356,7 @@
            [0030, 0007] (0033, OPEN_PAR  ) {(}
         VARIABLE = id INDEX
            [0030, 0008] (0001, IDENTIFIER) {n}
-INDEX = epsilon
+        INDEX = epsilon
         VAR_LISTR = epsilon
            [0030, 0009] (0034, CLOSE_PAR ) {)}
         STMT_LISTR = semicolon STMT STMT_LISTR

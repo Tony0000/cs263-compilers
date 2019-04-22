@@ -14,10 +14,10 @@ ID_LISTR -> comma id ID_LISTR
 
 DECLRS -> var VAR_DECLR DECLRSR |
 const CONST_DECLR DECLRSR
-| type TYPER DECLRSR
+| type NEW_TYPE DECLRSR
 | .
 
-VAR_DECLR -> ID_LIST dp TYPE semicolon VAR_DECLR
+VAR_DECLR -> ID_LIST double_dot TYPE semicolon VAR_DECLR
 | .
 
 CONST_DECLR -> id assignop CONST_VALUES semicolon CONST_DECLR | .
@@ -25,11 +25,13 @@ CONST_DECLR -> id assignop CONST_VALUES semicolon CONST_DECLR | .
 CONST_VALUES -> const_string | const_char | const_int | const_real | const_boolean .
 
 TYPE -> STD_TYPE
-| array lbrkt CTRL_VALUE through CTRL_VALUE rbrkt of STD_TYPE .
+| array open_bracket CTRL_VALUE double_dot CTRL_VALUE close_bracket of STD_TYPE .
 
 STD_TYPE -> integer | real | string | boolean | char .
 
-TYPER -> id assignop TYPE semicolon TYPER .
+NEW_TYPE -> id assignop TYPE semicolon NEW_TYPE .
+
+NEW_TYPER -> semicolon NEW_TYPE | .
 
 SUB_PGM_DECLRS -> SUB_PGM_DECLR semicolon SUB_PGM_DECLRS
 | .
@@ -39,12 +41,12 @@ SUB_PGM_DECLR -> SUB_PGM_HEAD DECLRS COMPOUND_STMT .
 SUB_PGM_HEAD -> function SUB_PGM_HEAD_PARAM declr STD_TYPE semicolon
 | procedure SUB_PGM_HEAD_PARAM semicolon .
 
-SUB_PGM_HEAD_PARAM -> id lparen PARAM_LIST rparen .
+SUB_PGM_HEAD_PARAM -> id open_paren PARAM_LIST close_paren .
 
-PARAM_LIST -> ID_LIST dp TYPE PARAM_LISTR
+PARAM_LIST -> ID_LIST double_dot TYPE PARAM_LISTR
 | .
 
-PARAM_LISTR -> semicolon ID_LIST dp TYPE PARAM_LIST
+PARAM_LISTR -> semicolon ID_LIST double_dot TYPE PARAM_LIST
 | .
 
 COMPOUND_STMT -> begin OPT_STMT end .
@@ -56,37 +58,39 @@ STMT_LIST -> STMT STMT_LISTR .
 STMT_LISTR -> semicolon STMT STMT_LISTR
 | .
 
-STMT -> VARIABLE assignop EXPRESSION
-| COMPOUND_STMT
+STMT -> COMPOUND_STMT
 | PROCEDURE_STMT
 | if EXPRESSION_LIST then STMT OPT_CONDITIONAL_STMT
 | while EXPRESSION_LIST do STMT
 | for id assignop CTRL_VALUE to CTRL_VALUE OPT_FOR_STEP do COMPOUND_STMT .
 
-CTRL_VALUE -> id | const_int.
+CTRL_VALUE -> id | const_int .
 
 OPT_CONDITIONAL_STMT -> else STMT | .
 
-OPT_FOR_STEP -> step const_int | .
+OPT_FOR_STEP -> step CTRL_VALUE | .
 
-PROCEDURE_STMT -> read lparen ID_LIST rparen
-| write lparen WRITE_PARAM_LIST
-| writeln lparen WRITE_PARAM_LIST
-| id lparen ID_LIST rparen .
+PROCEDURE_STMT -> read open_paren ID_LIST close_paren
+| write open_paren WRITE_PARAM_LIST
+| writeln open_paren WRITE_PARAM_LIST
+| id ASSIGN_OR_SUB_PGM_CALL .
 
 WRITE_PARAM_LIST -> const_string FIELD_WIDTH WRITE_PARAM_LISTR
 | VARIABLE FIELD_WIDTH WRITE_PARAM_LISTR .
 
 WRITE_PARAM_LISTR -> comma WRITE_PARAM_LIST
-| rparen .
+| close_paren .
 
-FIELD_WIDTH -> dp const_int PRECISION | .
+FIELD_WIDTH -> double_dot const_int PRECISION | .
 
-PRECISION -> dp const_int | .
+PRECISION -> double_dot const_int | .
+
+ASSIGN_OR_SUB_PGM_CALL -> open_paren ID_LIST close_paren
+| INDEX assignop EXPRESSION .
 
 VARIABLE -> id INDEX.
 
-INDEX -> lbrkt SIMPLE_EXPRESSION rbrkt
+INDEX -> open_bracket SIMPLE_EXPRESSION close_bracket
 | .
 
 VARIABLE_LIST -> VARIABLE VARIABLE_LISTR .

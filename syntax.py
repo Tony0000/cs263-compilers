@@ -123,11 +123,11 @@ class Parser(object):
             self.empty()
 
     def var_declarations(self):
-        ''' ID_LIST dp TYPE semicolon VAR_DECLRS | epsilon'''
+        ''' ID_LIST colon TYPE semicolon VAR_DECLRS | epsilon'''
         if self.current_token.categ == Category.IDENTIFIER:
-            print('           VAR_DECLRS = ID_LIST dp TYPE semicolon VAR_DECLRS')
+            print('           VAR_DECLRS = ID_LIST colon TYPE semicolon VAR_DECLRS')
             self.identifier_list()
-            self.consume(Category.DECLR)
+            self.consume(Category.COLON)
             self.type()
             self.consume(Category.SEMICOLON)
             self.var_declarations()
@@ -137,15 +137,15 @@ class Parser(object):
 
     def type(self):
         '''
-            array lbrkt CTRL_VALUE through CTRL_VALUE rbrkt of STD_TYPE
+            array open_bracket CTRL_VALUE double_dot CTRL_VALUE close_bracket of STD_TYPE
             | STD_TYPE
         '''
         if self.current_token.categ == Category.ARRAY:
-            print('           TYPE = array lbrkt CTRL_VALUE through CTRL_VALUE rbrkt of STD_TYPE')
+            print('           TYPE = array open_bracket CTRL_VALUE double_dot CTRL_VALUE close_bracket of STD_TYPE')
             self.consume(Category.ARRAY)
             self.consume(Category.OPEN_BRA)
             self.ctrl_value()
-            self.consume(Category.THROUGH)
+            self.consume(Category.DOUBLE_DOT)
             self.ctrl_value()
             self.consume(Category.CLOSE_BRA)
             self.consume(Category.OF)
@@ -156,11 +156,11 @@ class Parser(object):
 
     def std_type(self):
         '''
-            | const_int
-            | const_real
-            | const_string
-            | const_bool
-            | const_char
+            | integer
+            | real
+            | string
+            | bool
+            | char
             | id
         '''
         if self.current_token.categ in STD_TYPE:
@@ -180,6 +180,7 @@ class Parser(object):
 
     def new_typer(self):
         if self.current_token.categ == Category.SEMICOLON:
+            print('           NEW_TYPER = semicolon NEW_TYPE')
             self.consume(Category.SEMICOLON)
             self.new_type()
         else:
@@ -213,7 +214,7 @@ class Parser(object):
             print('           SUB_PGM_HEAD = function SUB_PGM_HEAD_PARAM declr STD_TYPE semicolon')
             self.consume(Category.FUNCTION)
             self.sub_program_head_param()
-            self.consume(Category.DECLR)
+            self.consume(Category.COLON)
             self.type()
             self.consume(Category.SEMICOLON)
         elif self.current_token.categ == Category.PROCEDURE:
@@ -223,18 +224,18 @@ class Parser(object):
             self.consume(Category.SEMICOLON)
 
     def sub_program_head_param(self):
-        print('           SUB_PGM_HEAD_PARAM = id lparen PARAM_LIST rparen')
+        print('           SUB_PGM_HEAD_PARAM = id open_paren PARAM_LIST close_paren')
         self.consume(Category.IDENTIFIER)
         self.consume(Category.OPEN_PAR)
         self.parameter_list()
         self.consume(Category.CLOSE_PAR)
 
     def parameter_list(self):
-        ''' ID_LIST dp TYPE PARAM_LISTR | epsilon '''
+        ''' ID_LIST colon TYPE PARAM_LISTR | epsilon '''
         if self.current_token.categ == Category.IDENTIFIER:
-            print('           PARAM_LIST = ID_LIST dp TYPE PARAM_LISTR')
+            print('           PARAM_LIST = ID_LIST colon TYPE PARAM_LISTR')
             self.identifier_list()
-            self.consume(Category.DECLR)
+            self.consume(Category.COLON)
             self.type()
             self.parameter_listr()
         else:
@@ -242,12 +243,12 @@ class Parser(object):
             self.empty()
 
     def parameter_listr(self):
-        ''' semicolon ID_LIST dp TYPE PARAM_LIST | epsilon '''
+        ''' semicolon ID_LIST colon TYPE PARAM_LIST | epsilon '''
         if self.current_token.categ == Category.SEMICOLON:
-            print('           PARAM_LISTR = semicolon ID_LIST dp TYPE PARAM_LIST')
+            print('           PARAM_LISTR = semicolon ID_LIST colon TYPE PARAM_LIST')
             self.consume(Category.SEMICOLON)
             self.identifier_list()
-            self.consume(Category.DECLR)
+            self.consume(Category.COLON)
             self.type()
             self.parameter_listr()
         else:
@@ -287,9 +288,8 @@ class Parser(object):
 
     def statement(self):
         '''
-            VARIABLE assignop EXPRESSION
+            PROCEDURE_STMT
             | COMPOUND_STMT
-            | PROCEDURE_STMT
             | if EXPRESSION then STMT OPT_CONDITIONAL_STMT
             | while EXPRESSION do STMT
             | for id assignop const_int to const_int OPT_FOR_STEP do COMPOUND_STMT
@@ -358,24 +358,24 @@ class Parser(object):
 
     def procedure_statement(self):
         '''
-            read lparen ID_LIST rparen
-            | write lparen WRITE_PARAM_LIST
-            | writeln lparen WRITE_PARAM_LIST
-            | id lparen ID_LIST rparen .
+            read open_paren ID_LIST close_paren
+            | write open_paren WRITE_PARAM_LIST
+            | writeln open_paren WRITE_PARAM_LIST
+            | id open_paren ID_LIST close_paren .
         '''
         if self.current_token.categ == Category.READ:
-            print('           PROCEDURE_STMT = read lparen VAR_LIST rparen')
+            print('           PROCEDURE_STMT = read open_paren VAR_LIST close_paren')
             self.consume(Category.READ)
             self.consume(Category.OPEN_PAR)
             self.variable_list()
             self.consume(Category.CLOSE_PAR)
         elif self.current_token.categ == Category.WRITE:
-            print('           PROCEDURE_STMT = write lparen WRITE_PARAM_LIST')
+            print('           PROCEDURE_STMT = write open_paren WRITE_PARAM_LIST')
             self.consume(Category.WRITE)
             self.consume(Category.OPEN_PAR)
             self.write_param_list()
         elif self.current_token.categ == Category.WRITELN:
-            print('           PROCEDURE_STMT = writeln lparen WRITE_PARAM_LIST')
+            print('           PROCEDURE_STMT = writeln open_paren WRITE_PARAM_LIST')
             self.consume(Category.WRITELN)
             self.consume(Category.OPEN_PAR)
             self.write_param_list()
@@ -385,7 +385,7 @@ class Parser(object):
 
     def assign_or_sub_pgm_call(self):
         if self.current_token.categ == Category.OPEN_PAR:
-            print('           ASSIGN_OR_SUB_PGM_CALL = lparen ID_LIST rparen')
+            print('           ASSIGN_OR_SUB_PGM_CALL = open_paren ID_LIST close_paren')
             self.consume(Category.OPEN_PAR)
             self.identifier_list()
             self.consume(Category.CLOSE_PAR)
@@ -413,13 +413,13 @@ class Parser(object):
             self.consume(Category.COMMA)
             self.write_param_list()
         else:
-            print('           WRITE_PARAM_LISTR = rparen')
+            print('           WRITE_PARAM_LISTR = close_paren')
             self.consume(Category.CLOSE_PAR)
 
     def field_width(self):
-        if self.current_token.categ == Category.DECLR:
-            print('           FIELD_WIDTH = dp const_int PRECISION')
-            self.consume(Category.DECLR)
+        if self.current_token.categ == Category.COLON:
+            print('           FIELD_WIDTH = colon const_int PRECISION')
+            self.consume(Category.COLON)
             self.consume(Category.CONST_INT)
             self.precision()
         else:
@@ -427,9 +427,9 @@ class Parser(object):
             self.empty()
 
     def precision(self):
-        if self.current_token.categ == Category.DECLR:
-            print('           PRECISION = dp const_int')
-            self.consume(Category.DECLR)
+        if self.current_token.categ == Category.COLON:
+            print('           PRECISION = colon const_int')
+            self.consume(Category.COLON)
             self.consume(Category.CONST_INT)
         else:
             print('           PRECISION = epsilon')
@@ -457,7 +457,7 @@ class Parser(object):
 
     def index(self):
         if self.current_token.categ == Category.OPEN_BRA:
-            print('           INDEX = lbrkt SIMPLE_EXPRESSION rbrkt')
+            print('           INDEX = open_bracket SIMPLE_EXPRESSION close_bracket')
             self.consume(Category.OPEN_BRA)
             self.simple_expression()
             self.consume(Category.CLOSE_BRA)
